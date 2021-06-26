@@ -18,14 +18,14 @@
       'link' => 'https://docs.google.com/document/d/1Wzu9Xd9R_4O1kAC6MqtCOgX1oFeFMvaKoDfQQMXOiew/',
     ],
     [
-      'title' => 'CURRICULUM COMPLEMENTO 2',
-      'description' => '',
-      'link' => 'https://drive.google.com/file/d/0B4oD1jsMU4B3OEQwNHdPWjUzS0U/',
-    ],
-    [
       'title' => 'CURRICULUM COMPLEMENTO 1',
       'description' => '',
       'link' => 'https://drive.google.com/file/d/0B4oD1jsMU4B3RDA5Ul8waUZyYnM/',
+    ],
+    [
+      'title' => 'CURRICULUM COMPLEMENTO 2',
+      'description' => '',
+      'link' => 'https://drive.google.com/file/d/0B4oD1jsMU4B3OEQwNHdPWjUzS0U/',
     ],
   ];
 ?>

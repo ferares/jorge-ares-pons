@@ -33,7 +33,7 @@
       'link' => 'https://docs.google.com/document/d/1215l0lV5_R2nPkN3U6vE7FB_AJqK_vK6zk1qWREAVVM',
     ],
     [
-      'title' => 'Jorge Ares Pons - Reportaje 7.pdf',
+      'title' => 'Jorge Ares Pons - Reportaje',
       'description' => '',
       'link' => 'https://drive.google.com/file/d/15idUh3v8PppHFwss8CWwdQi8SDILyxzJ/view?usp',
     ],
@@ -63,7 +63,7 @@
       'link' => 'https://docs.google.com/document/d/1haZ-japKZFKVwsFejU7f2Qv_MYqCGBonDa7WUeFil9g',
     ],
     [
-      'title' => 'consejo_consultivo_de_enseñanza_terciaria_privada_no_impulsó_patrones_de_calidad (5).pdf',
+      'title' => 'Consejo Consultivo de Enseñanza Terciaria Privada no impulsó patrones de calidad',
       'description' => '',
       'link' => 'https://docs.google.com/file/d/0B4oD1jsMU4B3VlkzRGlzNzZ3Z1k/edit?usp',
     ],
@@ -78,7 +78,7 @@
       'link' => 'https://docs.google.com/file/d/0B4oD1jsMU4B3VVl4dmRpZEJFdEU',
     ],
     [
-      'title' => 'Comentarios a propósito de una propuesta del Rector referida a “áreas” y “unidades disciplinarias”',
+      'title' => 'Comentarios a propósito de una propuesta del Rector referida a "áreas" y "unidades disciplinarias"',
       'description' => '',
       'link' => 'https://docs.google.com/document/d/14a2W6o_Ctd3fiKRLjmaX-BgiCSgjttWArJQ5kDtsLxw',
     ],

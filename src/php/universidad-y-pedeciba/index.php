@@ -13,7 +13,7 @@
       'link' => 'https://docs.google.com/document/d/1HAkQXL0laFyHNEjt9iDi0lJMW0JwFYDn_aIFeTKhzkc/',
     ],
     [
-      'title' => 'Trascendencia del PEDECIBA.pdf',
+      'title' => 'Trascendencia del PEDECIBA',
       'description' => '',
       'link' => 'https://drive.google.com/file/d/0B4oD1jsMU4B3OVBVRUdrbkpyTDA/view?usp=',
     ],
@@ -24,11 +24,11 @@
     ],
     [
       'title' => 'Posgrados y Savello. Maestrías profesionales',
-      'description' => 'Calificación de planteles docentes para posgrados stricto sensu.Opinión del Prof.Paul Savello',
+      'description' => 'Calificación de planteles docentes para posgrados stricto sensu. Opinión del Prof. Paul Savello',
       'link' => 'https://docs.google.com/document/d/1wDbBNevjo-AxvpjJ5JS1SRv0jNeehMOlQjId3ABs1O8/',
     ],
     [
-      'title' => 'PEDECIBA2.doc',
+      'title' => 'PEDECIBA 2',
       'description' => '',
       'link' => 'https://drive.google.com/file/d/0B4oD1jsMU4B3RzFrRXgzc3Z0Nkk/view?usp=',
     ],
@@ -43,7 +43,7 @@
       'link' => 'https://docs.google.com/document/d/1c_Ait7U-4vSNZV5DdZfbjhOksbdI5v6aYnv3EyXJNgY/',
     ],
     [
-      'title' => 'LIbertad y Restricciones.doc',
+      'title' => 'LIbertad y Restricciones',
       'description' => '',
       'link' => 'https://drive.google.com/file/d/0B4oD1jsMU4B3V2I2Z1FabkNqZkE/view?usp=',
     ],
@@ -84,7 +84,7 @@
     ],
       [
       'title' => 'CUETP',
-      'description' => 'Comisión Universitaria de Enseñanza Terciaria Privada CUETP)',
+      'description' => 'Comisión Universitaria de Enseñanza Terciaria Privada (CUETP)',
       'link' => 'https://docs.google.com/document/d/1gOYTh1xEYBHvKnohJD_kP-bl2UVPBSfICDi-KDMWuEo/',
     ],
     [
@@ -98,7 +98,7 @@
       'link' => 'https://docs.google.com/document/d/1pjd42PiVoRKWYAuYtMUdDV7jTpIWT-EFYCP4UlNsfzo/',
     ],
     [
-      'title' => 'AUTONOMIAS UNIVERSITARIAS (1).doc',
+      'title' => 'AUTONOMIAS UNIVERSITARIAS',
       'description' => '',
       'link' => 'https://drive.google.com/file/d/0B4oD1jsMU4B3RjFDeVNiajBKVjA/view?usp=',
     ],

@@ -53,7 +53,7 @@
       'link' =>  'https://docs.google.com/document/d/1KnPYKiMnhRUC9cymbLdkiVWJjOTPrtKVyEYPDWPKW3M/',
     ],
     [
-      'title' => 'Jorge Ares Pons - Reportaje 7.pdf',
+      'title' => 'Jorge Ares Pons - Reportaje',
       'description' => '',
       'link' =>  'https://drive.google.com/file/d/15idUh3v8PppHFwss8CWwdQi8SDILyxzJ/view?usp=',
     ],
@@ -98,23 +98,23 @@
       'link' =>  'https://docs.google.com/document/d/1geFVfu6dbJpyk_ijhN04n7nLeJkarPmgARS-wDhJ-SI/',
     ],
     [
-      'title' => 'Dictamen Nº 328 ( maestrías académicas y profesionales)',
-      'description' => 'jurisprudencia    CCETP',
+      'title' => 'Dictamen Nº 328 (maestrías académicas y profesionales)',
+      'description' => 'jurisprudencia CCETP',
       'link' =>  'https://docs.google.com/file/d/0B4oD1jsMU4B3NmtXamZUelVubEk/',
     ],
     [
       'title' => 'Dictamen Nº 244 (doctorados)',
-      'description' => 'jurisprudencia    CCETP',
+      'description' => 'jurisprudencia CCETP',
       'link' =>  'https://docs.google.com/file/d/0B4oD1jsMU4B3VHZsdmtaQVdUaE0/edit?usp=',
     ],
     [
       'title' => 'Dictamen Nº 232 (personal docente)',
-      'description' => 'jurisprudencia    CCETP',
+      'description' => 'jurisprudencia CCETP',
       'link' =>  'https://docs.google.com/file/d/0B4oD1jsMU4B3OGVFUHpPMUNMLUE/edit?usp=',
     ],
     [
       'title' => 'Dictamen Nº 222 (alcances  Dec.308/995)',
-      'description' => 'jurisprudencia    CCETP',
+      'description' => 'jurisprudencia CCETP',
       'link' =>  'https://docs.google.com/file/d/0B4oD1jsMU4B3VzdzWm1va0M5RmM/',
     ],
     [
