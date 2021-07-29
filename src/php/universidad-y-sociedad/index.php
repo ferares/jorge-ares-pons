@@ -28,6 +28,11 @@
       'link' => 'https://docs.google.com/document/d/1j1-6SfGZzPI_HZMk-jVaGJajm4PHIntJoD31_Wcf8wQ',
     ],
     [
+      'title' => 'Cuatro decanos',
+      'description' => 'Neoliberalismo y Universidad: conservadores y "renovadores".',
+      'link' => 'https://docs.google.com/document/d/1j27FedrxkFXdJLy8udHFdX8AC2FEZjjsk_5VbM63VSI/',
+    ],
+    [
       'title' => 'Niveles de titulación',
       'description' => '',
       'link' => 'https://docs.google.com/document/d/1215l0lV5_R2nPkN3U6vE7FB_AJqK_vK6zk1qWREAVVM',

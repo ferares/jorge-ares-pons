@@ -88,11 +88,6 @@
       'link' => 'https://docs.google.com/document/d/1gOYTh1xEYBHvKnohJD_kP-bl2UVPBSfICDi-KDMWuEo/',
     ],
     [
-      'title' => 'Cuatro decanos',
-      'description' => 'Neoliberalismo y Universidad:conservadores y "renovadores".',
-      'link' => 'https://docs.google.com/document/d/1j27FedrxkFXdJLy8udHFdX8AC2FEZjjsk_5VbM63VSI/',
-    ],
-    [
       'title' => 'Citas para Carrera Docente',
       'description' => 'Recopilación. Klimovsky, etc.',
       'link' => 'https://docs.google.com/document/d/1pjd42PiVoRKWYAuYtMUdDV7jTpIWT-EFYCP4UlNsfzo/',
