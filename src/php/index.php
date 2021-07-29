@@ -1,4 +1,4 @@
-<?php require_once('./inc/_head.php'); require_once('./inc/_header.php'); ?>
+<?php require_once('functions.php'); require_once('./inc/_head.php'); require_once('./inc/_header.php'); ?>
 <div class="container">
   <div class="row">
     <div class="col-12">

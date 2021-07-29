@@ -35,6 +35,10 @@ const paths = {
       all: ['./node_modules/bootstrap/dist/js/bootstrap.min.js'],
     },
 
+    files: {
+      all: ['./src/files/*', './src/files/.*'],
+    },
+
     views: {
       all: ['./src/php/*.php', './src/php/**/*.php'],
     },
@@ -43,6 +47,7 @@ const paths = {
   dest: {
     scss: `${dest}/css`,
     js: `${dest}/js`,
+    files: dest,
     views: dest,
   },
 };
@@ -112,6 +117,11 @@ gulp.task('build-js', () =>
     .pipe(argv.prod ? noop() : browserSync.stream())
 );
 
+gulp.task('build-files', () =>
+  gulp.src(paths.src.files.all)
+    .pipe(gulp.dest(paths.dest.files))
+);
+
 gulp.task('build-views', () =>
   gulp.src(paths.src.views.all)
     .pipe(gulp.dest(paths.dest.views))
@@ -126,6 +136,7 @@ const buildTasks = gulp.series([
     'build-scss',
     'build-js',
     'build-views',
+    'build-files',
   ]),
 ]);
 
