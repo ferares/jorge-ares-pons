@@ -17,7 +17,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link <?php if ($active === 1) echo 'active'; ?>" <?php if ($active === 1) echo 'aria-current="page"'; ?> href="/evaluación-y-acreditación-apacet">
+            <a class="nav-link <?php if ($active === 1) echo 'active'; ?>" <?php if ($active === 1) echo 'aria-current="page"'; ?> href="/evaluacion-y-acreditacion-apacet">
               Evaluación y acreditación. APACET
             </a>
           </li>

@@ -9,7 +9,7 @@
 function assetPath($filename, $type) {
   $path = $filename;
   $manifestPath = './manifest-'.$type.'.json';
-  $manifest = json_decode(@file_get_contents($manifestPath), TRUE);
+  $manifest = json_decode(file_get_contents($manifestPath), TRUE);
   if ($manifest) $path = $manifest[$filename];
   return $path;
 }
