@@ -17,14 +17,16 @@ if ($uri === '/') {
 <!DOCTYPE html>
 <html lang='es'>
 
-<?php require_once("./inc/_head.php"); ?>
-<body>
+  <?php require_once("./inc/_head.php"); ?>
 
-<?php require_once("./inc/_header.php"); ?>
+  <body>
 
-<?php require_once($url); ?>
+    <?php require_once("./inc/_header.php"); ?>
 
-<?php require_once("./inc/_footer.php"); ?>
+    <?php require_once($url); ?>
 
-</body>
+    <?php require_once("./inc/_footer.php"); ?>
+
+  </body>
+
 </html>
