@@ -1,5 +1,3 @@
-<?php if (!isset($active)) $active = 0; ?>
-
 <header class="mb-4">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
@@ -12,32 +10,32 @@
       <div class="collapse navbar-collapse" id="nav-main">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link <?php if ($active === 0) echo 'active'; ?>" <?php if ($active === 0) echo 'aria-current="page"'; ?> href="/">
+            <a class="nav-link <?php if ($uri === 'inicio') echo 'active'; ?>" <?php if ($uri === 'inicio') echo 'aria-current="page"'; ?> href="/">
               Inicio
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link <?php if ($active === 1) echo 'active'; ?>" <?php if ($active === 1) echo 'aria-current="page"'; ?> href="/evaluacion-y-acreditacion-apacet">
+            <a class="nav-link <?php if ($uri === 'evaluacion-y-acreditacion-apacet') echo 'active'; ?>" <?php if ($uri === 'evaluacion-y-acreditacion-apacet') echo 'aria-current="page"'; ?> href="/evaluacion-y-acreditacion-apacet">
               Evaluación y acreditación. APACET
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link <?php if ($active === 2) echo 'active'; ?>" <?php if ($active === 2) echo 'aria-current="page"'; ?> href="/libros-otros">
+            <a class="nav-link <?php if ($uri === 'libros-otros') echo 'active'; ?>" <?php if ($uri === 'libros-otros') echo 'aria-current="page"'; ?> href="/libros-otros">
               Libros/Otros
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link <?php if ($active === 3) echo 'active'; ?>" <?php if ($active === 3) echo 'aria-current="page"'; ?> href="/universidad-y-pedeciba">
+            <a class="nav-link <?php if ($uri === 'universidad-y-pedeciba') echo 'active'; ?>" <?php if ($uri === 'universidad-y-pedeciba') echo 'aria-current="page"'; ?> href="/universidad-y-pedeciba">
               Universidad y PEDECIBA
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link <?php if ($active === 4) echo 'active'; ?>" <?php if ($active === 4) echo 'aria-current="page"'; ?> href="/universidad-y-sociedad">
+            <a class="nav-link <?php if ($uri === 'universidad-y-sociedad') echo 'active'; ?>" <?php if ($uri === 'universidad-y-sociedad') echo 'aria-current="page"'; ?> href="/universidad-y-sociedad">
               Universidad y Sociedad
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link <?php if ($active === 5) echo 'active'; ?>" <?php if ($active === 5) echo 'aria-current="page"'; ?> href="/universidades-privadas">
+            <a class="nav-link <?php if ($uri === 'universidades-privadas') echo 'active'; ?>" <?php if ($uri === 'universidades-privadas') echo 'aria-current="page"'; ?> href="/universidades-privadas">
               Universidades Privadas
             </a>
           </li>
