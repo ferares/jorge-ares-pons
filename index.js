@@ -1,7 +1,10 @@
 const babelify = require('babelify');
 const browserify = require('browserify');
 const browserSync = require('browser-sync').create();
+const chokidar = require('chokidar');
+const crypto = require('crypto');
 const fs = require('fs-extra');
+const modifyFilename = require('modify-filename');
 const path = require('path');
 const phpServer = require('php-server');
 const sass = require('node-sass');
@@ -14,58 +17,102 @@ const config = {
 // Paths
 const dest = './dist';
 
+const paths = {
+  src: {
+    scss: {
+      all: './src/scss/',
+      files: ['./src/scss/main.scss'],
+    },
+
+    js: {
+      all: './src/js/',
+      files: ['./node_modules/bootstrap/dist/js/bootstrap.min.js'],
+    },
+
+    files: {
+      all: './src/files/',
+      files: ['./src/files/'],
+    },
+
+    php: {
+      all: './src/php/',
+      files: ['./src/php/'],
+    },
+  },
+
+  dest: {
+    scss: `${dest}/css`,
+    js: `${dest}/js`,
+    files: dest,
+    php: dest,
+  },
+};
+
 function clean() {
   fs.rmSync(dest, { recursive: true, force: true });
 }
 
-function buildCss() {
-  console.log('Building CSS');
-  const css = sass.renderSync({
-    file: './src/scss/main.scss',
-    outFile: `${dest}/css/main.css`,
-    precision: 8,
-    outputStyle: 'compressed',
-    sourceMap: true,
-  });
+function rev(files, manifestPath) {
+  const manifest = {};
+  for (const file of files) {
+    const hash = crypto.createHash('md5').update(file.content).digest('hex').slice(0, 10);
+    const newPath = modifyFilename(file.path, (filename, ext) => `${filename}-${hash}${ext}`);
+    fs.renameSync(file.path, newPath);
+    manifest[path.basename(file.path)] = path.basename(newPath);
+  }
 
-  fs.outputFileSync(`${dest}/css/main.css`, css.css);
-  fs.outputFileSync(`${dest}/css/main.css.map`, css.map);
+  fs.writeFileSync(manifestPath, JSON.stringify(manifest));
 }
 
-function buildJs() {
+function buildCSS() {
+  console.log('Building CSS');
+  const files = [];
+  for (const file of paths.src.scss.files) {
+    const filename = path.basename(file, '.scss');
+    const outputFilePath = `${paths.dest.scss}/${filename}.css`;
+    const css = sass.renderSync({
+      file: file,
+      outFile: outputFilePath,
+      precision: 8,
+      outputStyle: 'compressed',
+      sourceMap: true,
+    });
+
+    fs.outputFileSync(outputFilePath, css.css);
+    fs.outputFileSync(`${outputFilePath}.map`, css.map);
+    files.push({ path: outputFilePath, content: css.css });
+  }
+  rev(files, `${dest}/manifest-css.json`);
+}
+
+function buildJS() {
   console.log('Building JS');
-  const dir = path.dirname(`${dest}/js/bundle.js`);
-  fs.mkdirSync(dir, { recursive: true });
-  const output = browserify(
-    ['./src/js/script.js'],
-    { debug: true }
-  )
+  fs.mkdirSync(paths.dest.js, { recursive: true });
+  const outputFilePath = `${paths.dest.js}/main.js`;
+  const output = browserify(paths.src.js.files, { debug: true })
   .transform(babelify.configure({ presets: ['@babel/preset-env'] }))
   .transform('unassertify', { global: true })
   .transform('@goto-bus-stop/envify', { global: true })
-  .transform('uglifyify', { global: true })
+  .transform('uglifyify', { global: true, sourceMap: false })
   .plugin('common-shakeify')
   .plugin('browser-pack-flat/plugin')
   .bundle()
   .on('error', function (err) { console.log(`JS Error: ${err.message}`); })
-  .pipe(fs.createWriteStream(`${dest}/js/bundle.js`));
+  .pipe(fs.createWriteStream(outputFilePath));
+  // rev([{ path: outputFilePath, content: fs.readFileSync(outputFilePath) }], `${dest}/manifest-js.json`);
 }
 
 function buildFiles() {
   console.log('Building files');
-  const targets = [
-    {
-      src: './src/php/',
-      dst: `${dest}/`,
-    },
-    {
-      src: './src/files/',
-      dst: `${dest}/`,
-    },
-  ];
+  for (const path of paths.src.files.files) {
+    fs.copySync(path, paths.dest.files);
+  }
+}
 
-  for (const target of targets) {
-    fs.copySync(target.src, target.dst);
+function buildPHP() {
+  console.log('Building PHP');
+  for (const path of paths.src.php.files) {
+    fs.copySync(path, paths.dest.php);
   }
 }
 
@@ -73,12 +120,19 @@ function buildAssets() {
   console.log('Building assets');
 }
 
-function watch() {
+function watch(path, action) {
+  chokidar.watch(path).on('change', () => {
+    action();
+    browserSync.reload();
+  });
+}
+
+function watchAll() {
   console.log('Watching for changes');
-  fs.watch('./src/php/', () => { buildFiles(); browserSync.reload(); });
-  fs.watch('./src/files/', () => { buildFiles(); browserSync.reload(); });
-  fs.watch('./src/scss/', () => { buildCss(); browserSync.reload(); });
-  // fs.watch('./src/js/', () => { buildJs(); browserSync.reload(); });
+  watch(paths.src.php.all, buildPHP);
+  watch(paths.src.files.all, buildFiles);
+  watch(paths.src.scss.all, buildCSS);
+  watch(paths.src.js.all, buildJS);
 }
 
 async function serve() {
@@ -100,8 +154,10 @@ async function serve() {
 }
 
 clean();
-buildCss();
-// buildJs();
+buildCSS();
+buildJS();
+buildPHP();
 buildFiles();
+buildAssets();
 serve();
-watch();
+watchAll();

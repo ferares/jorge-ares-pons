@@ -6,5 +6,5 @@
     <?php echo 'Jorge Ares Pons'.(isset($title) ? ' | '.$title : '') ?>
   </title>
   <link rel="stylesheet" href="<?php echoCssPath('main.css') ?>">
-  <script src="<?php echoJsPath('bootstrap.min.js') ?>"></script>
+  <script src="<?php echoJsPath('main.js') ?>"></script>
 </head>
