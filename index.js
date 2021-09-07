@@ -29,6 +29,11 @@ const paths = {
       files: ['./node_modules/bootstrap/dist/js/bootstrap.min.js'],
     },
 
+    assets: {
+      all: './src/assets/',
+      files: ['./src/assets/test.txt'],
+    },
+
     files: {
       all: './src/files/',
       files: ['./src/files/'],
@@ -43,6 +48,7 @@ const paths = {
   dest: {
     scss: `${dest}/css`,
     js: `${dest}/js`,
+    assets: `${dest}/assets`,
     files: dest,
     php: dest,
   },
@@ -118,6 +124,14 @@ function buildPHP() {
 
 function buildAssets() {
   console.log('Building assets');
+  fs.mkdirSync(paths.dest.assets, { recursive: true });
+  const files = [];
+  for (const file of paths.src.assets.files) {
+    const filename = path.basename(file);
+    fs.copyFileSync(file, `${paths.dest.assets}/${filename}`);
+    files.push({ path: `${paths.dest.assets}/${filename}`, content: fs.readFileSync(file) });
+  }
+  rev(files, `${dest}/manifest-assets.json`);
 }
 
 function watch(path, action) {
@@ -159,5 +173,5 @@ buildJS();
 buildPHP();
 buildFiles();
 buildAssets();
-serve();
-watchAll();
+// serve();
+// watchAll();
