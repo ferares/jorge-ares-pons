@@ -121,7 +121,6 @@ function buildJS() {
     fs.mkdirSync(paths.dest.js, { recursive: true });
     const outputFilePath = `${paths.dest.js}/main.js`;
     const output = browserify(paths.src.js.files, { debug: true })
-    .on('error', (err) => { console.error(`JS Error: ${err.message}`); })
     .on('bundle', () => {
       fs.readFile(outputFilePath).then((content) => {
         rev([{ path: outputFilePath, content: content }], `${dest}/manifest-js.json`);
@@ -135,8 +134,11 @@ function buildJS() {
     .plugin('browser-pack-flat/plugin')
     .bundle()
     .pipe(fs.createWriteStream(outputFilePath))
-    console.log('Building JS done.');
-    resolve();
+    .on('error', reject)
+    .on('finish', () => {
+      console.log('Building JS done.');
+      resolve();
+    });
   });
 }
 
