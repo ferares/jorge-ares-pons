@@ -31,7 +31,7 @@ const paths = {
 
     assets: {
       all: './src/assets/',
-      files: ['./src/assets/test.txt'],
+      files: [],
     },
 
     files: {
@@ -96,6 +96,8 @@ function buildJS() {
   fs.mkdirSync(paths.dest.js, { recursive: true });
   const outputFilePath = `${paths.dest.js}/main.js`;
   const output = browserify(paths.src.js.files, { debug: true })
+  .on('error', function (err) { console.log(`JS Error: ${err.message}`); })
+  .on('bundle', () => { rev([{ path: outputFilePath, content: fs.readFileSync(outputFilePath) }], `${dest}/manifest-js.json`); })
   .transform(babelify.configure({ presets: ['@babel/preset-env'] }))
   .transform('unassertify', { global: true })
   .transform('@goto-bus-stop/envify', { global: true })
@@ -103,9 +105,7 @@ function buildJS() {
   .plugin('common-shakeify')
   .plugin('browser-pack-flat/plugin')
   .bundle()
-  .on('error', function (err) { console.log(`JS Error: ${err.message}`); })
-  .pipe(fs.createWriteStream(outputFilePath));
-  // rev([{ path: outputFilePath, content: fs.readFileSync(outputFilePath) }], `${dest}/manifest-js.json`);
+  .pipe(fs.createWriteStream(outputFilePath))
 }
 
 function buildFiles() {
@@ -173,5 +173,5 @@ buildJS();
 buildPHP();
 buildFiles();
 buildAssets();
-// serve();
-// watchAll();
+serve();
+watchAll();
