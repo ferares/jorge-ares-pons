@@ -54,84 +54,130 @@ const paths = {
   },
 };
 
-function clean() {
-  fs.rmSync(dest, { recursive: true, force: true });
+function rev(files, manifestPath) {
+  return new Promise((resolve, reject) => {
+    const promises = [];
+    const manifest = {};
+    for (const file of files) {
+      const hash = crypto.createHash('md5').update(file.content).digest('hex').slice(0, 10);
+      const newPath = modifyFilename(file.path, (filename, ext) => `${filename}-${hash}${ext}`);
+      promises.push(fs.rename(file.path, newPath));
+      manifest[path.basename(file.path)] = path.basename(newPath);
+    }
+    Promise.all(promises).then(() => {
+      fs.writeFile(manifestPath, JSON.stringify(manifest)).then(resolve).catch(reject);
+    });
+  });
 }
 
-function rev(files, manifestPath) {
-  const manifest = {};
-  for (const file of files) {
-    const hash = crypto.createHash('md5').update(file.content).digest('hex').slice(0, 10);
-    const newPath = modifyFilename(file.path, (filename, ext) => `${filename}-${hash}${ext}`);
-    fs.renameSync(file.path, newPath);
-    manifest[path.basename(file.path)] = path.basename(newPath);
-  }
-
-  fs.writeFileSync(manifestPath, JSON.stringify(manifest));
+function clean() {
+  console.log('Cleaning...');
+  return new Promise((resolve, reject) => {
+    fs.rm(dest, { recursive: true, force: true }).then(resolve).catch(reject).finally(console.log('Cleaning done.'));
+  });
 }
 
 function buildCSS() {
-  console.log('Building CSS');
-  const files = [];
-  for (const file of paths.src.scss.files) {
-    const filename = path.basename(file, '.scss');
-    const outputFilePath = `${paths.dest.scss}/${filename}.css`;
-    const css = sass.renderSync({
-      file: file,
-      outFile: outputFilePath,
-      precision: 8,
-      outputStyle: 'compressed',
-      sourceMap: true,
+  console.log('Building CSS...');
+  return new Promise((resolve, reject) => {
+    const promises = [];
+    const files = [];
+    for (const file of paths.src.scss.files) {
+      const filename = path.basename(file, '.scss');
+      const outputFilePath = `${paths.dest.scss}/${filename}.css`;
+      promises.push(new Promise((resolve, reject) => {
+        return sass.render({
+          file: file,
+          outFile: outputFilePath,
+          precision: 8,
+          outputStyle: 'compressed',
+          sourceMap: true,
+        }, (err, res) => {
+          if (err) return reject(err);
+          resolve(res);
+        });
+      }));
+    }
+    Promise.all(promises).then((values) => {
+      const promises = [];
+      for (var value of values) {
+        const filename = path.basename(value.stats.entry, '.scss');
+        const outputFilePath = `${paths.dest.scss}/${filename}.css`;
+        promises.push(fs.outputFile(outputFilePath, value.css));
+        promises.push(fs.outputFile(`${outputFilePath}.map`, value.map));
+        files.push({ path: outputFilePath, content: value.css });
+      }
+      Promise.all(promises).then(() => {
+        rev(files, `${dest}/manifest-css.json`);
+        resolve();
+      }).catch(reject).finally(console.log('Building CSS done.'));
     });
-
-    fs.outputFileSync(outputFilePath, css.css);
-    fs.outputFileSync(`${outputFilePath}.map`, css.map);
-    files.push({ path: outputFilePath, content: css.css });
-  }
-  rev(files, `${dest}/manifest-css.json`);
+  });
 }
 
 function buildJS() {
-  console.log('Building JS');
-  fs.mkdirSync(paths.dest.js, { recursive: true });
-  const outputFilePath = `${paths.dest.js}/main.js`;
-  const output = browserify(paths.src.js.files, { debug: true })
-  .on('error', function (err) { console.log(`JS Error: ${err.message}`); })
-  .on('bundle', () => { rev([{ path: outputFilePath, content: fs.readFileSync(outputFilePath) }], `${dest}/manifest-js.json`); })
-  .transform(babelify.configure({ presets: ['@babel/preset-env'] }))
-  .transform('unassertify', { global: true })
-  .transform('@goto-bus-stop/envify', { global: true })
-  .transform('uglifyify', { global: true, sourceMap: false })
-  .plugin('common-shakeify')
-  .plugin('browser-pack-flat/plugin')
-  .bundle()
-  .pipe(fs.createWriteStream(outputFilePath))
+  console.log('Building JS...');
+  return new Promise((resolve, reject) => {
+    fs.mkdirSync(paths.dest.js, { recursive: true });
+    const outputFilePath = `${paths.dest.js}/main.js`;
+    const output = browserify(paths.src.js.files, { debug: true })
+    .on('error', (err) => { console.error(`JS Error: ${err.message}`); })
+    .on('bundle', () => {
+      fs.readFile(outputFilePath).then((content) => {
+        rev([{ path: outputFilePath, content: content }], `${dest}/manifest-js.json`);
+      });
+    })
+    .transform(babelify.configure({ presets: ['@babel/preset-env'] }))
+    .transform('unassertify', { global: true })
+    .transform('@goto-bus-stop/envify', { global: true })
+    .transform('uglifyify', { global: true, sourceMap: false })
+    .plugin('common-shakeify')
+    .plugin('browser-pack-flat/plugin')
+    .bundle()
+    .pipe(fs.createWriteStream(outputFilePath))
+    console.log('Building JS done.');
+    resolve();
+  });
 }
 
 function buildFiles() {
-  console.log('Building files');
-  for (const path of paths.src.files.files) {
-    fs.copySync(path, paths.dest.files);
-  }
+  console.log('Building files...');
+  return new Promise((resolve, reject) => {
+    const promises = [];
+    for (const path of paths.src.files.files) {
+      promises.push(fs.copy(path, paths.dest.files));
+    }
+    Promise.all(promises).then(resolve).catch(reject).finally(console.log('Building files done.'));
+  });
 }
 
-function buildPHP() {
-  console.log('Building PHP');
-  for (const path of paths.src.php.files) {
-    fs.copySync(path, paths.dest.php);
-  }
+function buildPHP(done) {
+  console.log('Building PHP...');
+  return new Promise((resolve, reject) => {
+    const promises = [];
+    for (const path of paths.src.php.files) {
+      promises.push(fs.copy(path, paths.dest.php));
+    }
+    Promise.all(promises).then(resolve).catch(reject).finally(console.log('Building PHP done.'));
+  });
 }
 
 function buildAssets() {
-  console.log('Building assets');
-  fs.mkdirSync(paths.dest.assets, { recursive: true });
-  const files = [];
-  for (const file of paths.src.assets.files) {
-    const filename = path.basename(file);
-    fs.copyFileSync(file, `${paths.dest.assets}/${filename}`);
-    files.push({ path: `${paths.dest.assets}/${filename}`, content: fs.readFileSync(file) });
-  }
-  rev(files, `${dest}/manifest-assets.json`);
+  console.log('Building assets...');
+  return new Promise((resolve, reject) => {
+    fs.mkdir(paths.dest.assets, { recursive: true }).then(() => {
+      const promises = [];
+      const files = [];
+      for (const file of paths.src.assets.files) {
+        const filename = path.basename(file);
+        promises.push(fs.copyFile(file, `${paths.dest.assets}/${filename}`));
+        files.push({ path: `${paths.dest.assets}/${filename}`, content: fs.readFileSync(file) });
+      }
+      Promise.all(promises).then(() => {
+        rev(files, `${dest}/manifest-assets.json`).then(resolve);
+      }).catch(reject).finally(console.log('Building assets done.'));
+    });
+  });
 }
 
 function watch(path, action) {
@@ -142,36 +188,50 @@ function watch(path, action) {
 }
 
 function watchAll() {
-  console.log('Watching for changes');
+  console.log('Watching for changes...');
   watch(paths.src.php.all, buildPHP);
   watch(paths.src.files.all, buildFiles);
   watch(paths.src.scss.all, buildCSS);
   watch(paths.src.js.all, buildJS);
 }
 
-async function serve() {
-  await phpServer({
-    port: config.port,
-    hostname: config.host,
-    base: './dist',
-  });
-  browserSync.init({
-    proxy: `${config.host}:${config.port}`,
-    host: config.host,
-    port: config.port + 1,
-    ghostMode: {
-      clicks: false,
-      forms: false,
-      scroll: false,
-    },
+function serve() {
+  console.log('Starting local dev server...');
+  return new Promise((resolve, reject) => {
+    phpServer({
+      port: config.port,
+      hostname: config.host,
+      base: './dist',
+    }).then(() => {
+      browserSync.init({
+        proxy: `${config.host}:${config.port}`,
+        host: config.host,
+        port: config.port + 1,
+        ghostMode: {
+          clicks: false,
+          forms: false,
+          scroll: false,
+        },
+      }, () => {
+        console.log('Starting local dev server done.');
+        resolve();
+      });
+    });
   });
 }
 
-clean();
-buildCSS();
-buildJS();
-buildPHP();
-buildFiles();
-buildAssets();
-serve();
-watchAll();
+clean().then(() => {
+  buildAssets().then(() => {
+    const promises = [
+      buildCSS(),
+      buildJS(),
+      buildPHP(),
+      buildFiles(),
+    ];
+    Promise.all(promises).then(() => {
+      serve().then(() => {
+        watchAll();
+      });
+    });
+  });
+});
