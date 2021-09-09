@@ -56,16 +56,18 @@ const paths = {
 
 function rev(files, manifestPath) {
   return new Promise((resolve, reject) => {
-    const promises = [];
-    const manifest = {};
-    for (const file of files) {
-      const hash = crypto.createHash('md5').update(file.content).digest('hex').slice(0, 10);
-      const newPath = modifyFilename(file.path, (filename, ext) => `${filename}-${hash}${ext}`);
-      promises.push(fs.rename(file.path, newPath));
-      manifest[path.basename(file.path)] = path.basename(newPath);
-    }
-    Promise.all(promises).then(() => {
-      fs.writeFile(manifestPath, JSON.stringify(manifest)).then(resolve).catch(reject);
+    fs.readJson(manifestPath, (err, manifest) => {
+      if (err) manifest = {};
+      const promises = [];
+      for (const file of files) {
+        const hash = crypto.createHash('md5').update(file.content).digest('hex').slice(0, 10);
+        const newPath = modifyFilename(file.path, (filename, ext) => `${filename}-${hash}${ext}`);
+        promises.push(fs.rename(file.path, newPath));
+        manifest[path.basename(file.path)] = path.basename(newPath);
+      }
+      Promise.all(promises).then(() => {
+        fs.outputJson(manifestPath, manifest).then(resolve).catch(reject);
+      });
     });
   });
 }
@@ -118,26 +120,27 @@ function buildCSS() {
 function buildJS() {
   console.log('Building JS...');
   return new Promise((resolve, reject) => {
-    fs.mkdirSync(paths.dest.js, { recursive: true });
-    const outputFilePath = `${paths.dest.js}/main.js`;
-    const output = browserify(paths.src.js.files, { debug: true })
-    .on('bundle', () => {
-      fs.readFile(outputFilePath).then((content) => {
-        rev([{ path: outputFilePath, content: content }], `${dest}/manifest-js.json`);
+    fs.mkdir(paths.dest.js, { recursive: true }).then(() => {
+      const outputFilePath = `${paths.dest.js}/main.js`;
+      const output = browserify(paths.src.js.files, { debug: true })
+      .on('bundle', () => {
+        fs.readFile(outputFilePath).then((content) => {
+          rev([{ path: outputFilePath, content: content }], `${dest}/manifest-js.json`);
+        });
+      })
+      .transform(babelify.configure({ presets: ['@babel/preset-env'] }))
+      .transform('unassertify', { global: true })
+      .transform('@goto-bus-stop/envify', { global: true })
+      .transform('uglifyify', { global: true, sourceMap: false })
+      .plugin('common-shakeify')
+      .plugin('browser-pack-flat/plugin')
+      .bundle()
+      .pipe(fs.createWriteStream(outputFilePath))
+      .on('error', reject)
+      .on('finish', () => {
+        console.log('Building JS done.');
+        resolve();
       });
-    })
-    .transform(babelify.configure({ presets: ['@babel/preset-env'] }))
-    .transform('unassertify', { global: true })
-    .transform('@goto-bus-stop/envify', { global: true })
-    .transform('uglifyify', { global: true, sourceMap: false })
-    .plugin('common-shakeify')
-    .plugin('browser-pack-flat/plugin')
-    .bundle()
-    .pipe(fs.createWriteStream(outputFilePath))
-    .on('error', reject)
-    .on('finish', () => {
-      console.log('Building JS done.');
-      resolve();
     });
   });
 }
@@ -173,10 +176,18 @@ function buildAssets() {
       for (const file of paths.src.assets.files) {
         const filename = path.basename(file);
         promises.push(fs.copyFile(file, `${paths.dest.assets}/${filename}`));
-        files.push({ path: `${paths.dest.assets}/${filename}`, content: fs.readFileSync(file) });
       }
-      Promise.all(promises).then(() => {
-        rev(files, `${dest}/manifest-assets.json`).then(resolve);
+      Promise.all(promises).then((values) => {
+        const promises = [];
+        for (const file of paths.src.assets.files) {
+          promises.push(fs.readFile(file).then((content) => {
+            const filePath = `${paths.dest.assets}/${path.basename(file)}`;
+            return { path: filePath, content: content };
+          }));
+        }
+        Promise.all(promises).then((files) => {
+          rev(files, `${dest}/manifest-assets.json`).then(resolve);
+        });
       }).catch(reject).finally(console.log('Building assets done.'));
     });
   });
