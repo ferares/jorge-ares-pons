@@ -199,6 +199,43 @@ function buildViews(done) {
   });
 }
 
+function buildAssetFile(asset, base) {
+  return new Promise((resolve, reject) => {
+    const filename = `${paths.dest.assets}/${path.relative(base, asset)}`;
+    fs.mkdir(path.dirname(filename), { recursive: true }).then(() => {
+      fs.copyFile(asset, filename).then(() => {
+        if (config.prod) {
+          fs.readFile(asset).then((content) => {
+            const file = { path: filename, content: content };
+            rev([file], `${dest}/manifest-assets.json`).then(resolve);
+          });
+        } else {
+          resolve();
+        }
+      });
+    });
+  });
+}
+
+function buildAssetFolder(folder, base) {
+  return new Promise((resolve, reject) => {
+    fs.readdir(folder).then((elements) => {
+      const promises = [];
+      for (const element of elements) {
+        const asset = `${folder}/${element}`;
+        fs.lstat(asset).then((stats) => {
+          if (stats.isFile()) {
+            promises.push(buildAssetFile(asset, base));
+          } else {
+            promises.push(buildAssetFolder(asset, base));
+          }
+        });
+      }
+      Promise.all(promises).then(resolve).catch(reject);
+    });
+  });
+}
+
 function buildAssets() {
   console.time('Building assets done after');
   console.log('Building assets...');
@@ -206,27 +243,18 @@ function buildAssets() {
     fs.mkdir(paths.dest.assets, { recursive: true }).then(() => {
       const promises = [];
       const files = [];
-      for (const file of paths.src.assets.files) {
-        const filename = path.basename(file);
-        promises.push(fs.copyFile(file, `${paths.dest.assets}/${filename}`));
-      }
-      Promise.all(promises).then((values) => {
-        if (config.prod) {
-          const promises = [];
-          for (const file of paths.src.assets.files) {
-            promises.push(fs.readFile(file).then((content) => {
-              const filePath = `${paths.dest.assets}/${path.basename(file)}`;
-              return { path: filePath, content: content };
-            }));
+      const elements = paths.src.assets.files;
+      for (const element of elements) {
+        fs.lstat(element).then((stats) => {
+          const base = path.normalize(element);
+          if (stats.isFile()) {
+            promises.push(buildAssetFile(element, base));
+          } else {
+            promises.push(buildAssetFolder(element, base));
           }
-          Promise.all(promises).then((files) => {
-            rev(files, `${dest}/manifest-assets.json`).then(resolve).finally(console.timeEnd('Building assets done after'));
-          });
-        } else {
-          console.timeEnd('Building assets done after');
-          resolve();
-        }
-      }).catch(reject);
+        });
+      }
+      Promise.all(promises).then(resolve).catch(reject).finally(console.timeEnd('Building assets done after'));
     });
   });
 }
