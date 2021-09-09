@@ -73,13 +73,15 @@ function rev(files, manifestPath) {
 }
 
 function clean() {
+  console.time('Cleaning done after');
   console.log('Cleaning...');
   return new Promise((resolve, reject) => {
-    fs.rm(dest, { recursive: true, force: true }).then(resolve).catch(reject).finally(console.log('Cleaning done.'));
+    fs.rm(dest, { recursive: true, force: true }).then(resolve).catch(reject).finally(console.timeEnd('Cleaning done after'));
   });
 }
 
 function buildCSS() {
+  console.time('Building CSS done after');
   console.log('Building CSS...');
   return new Promise((resolve, reject) => {
     const promises = [];
@@ -112,12 +114,13 @@ function buildCSS() {
       Promise.all(promises).then(() => {
         rev(files, `${dest}/manifest-css.json`);
         resolve();
-      }).catch(reject).finally(console.log('Building CSS done.'));
+      }).catch(reject).finally(console.timeEnd('Building CSS done after'));
     });
   });
 }
 
 function buildJS() {
+  console.time('Building JS done after');
   console.log('Building JS...');
   return new Promise((resolve, reject) => {
     fs.mkdir(paths.dest.js, { recursive: true }).then(() => {
@@ -138,7 +141,7 @@ function buildJS() {
       .pipe(fs.createWriteStream(outputFilePath))
       .on('error', reject)
       .on('finish', () => {
-        console.log('Building JS done.');
+        console.timeEnd('Building JS done after');
         resolve();
       });
     });
@@ -146,28 +149,31 @@ function buildJS() {
 }
 
 function buildFiles() {
+  console.time('Building files done after');
   console.log('Building files...');
   return new Promise((resolve, reject) => {
     const promises = [];
     for (const path of paths.src.files.files) {
       promises.push(fs.copy(path, paths.dest.files));
     }
-    Promise.all(promises).then(resolve).catch(reject).finally(console.log('Building files done.'));
+    Promise.all(promises).then(resolve).catch(reject).finally(console.timeEnd('Building files done after'));
   });
 }
 
 function buildPHP(done) {
+  console.time('Building PHP done after');
   console.log('Building PHP...');
   return new Promise((resolve, reject) => {
     const promises = [];
     for (const path of paths.src.php.files) {
       promises.push(fs.copy(path, paths.dest.php));
     }
-    Promise.all(promises).then(resolve).catch(reject).finally(console.log('Building PHP done.'));
+    Promise.all(promises).then(resolve).catch(reject).finally(console.timeEnd('Building PHP done after'));
   });
 }
 
 function buildAssets() {
+  console.time('Building assets done after');
   console.log('Building assets...');
   return new Promise((resolve, reject) => {
     fs.mkdir(paths.dest.assets, { recursive: true }).then(() => {
@@ -188,7 +194,7 @@ function buildAssets() {
         Promise.all(promises).then((files) => {
           rev(files, `${dest}/manifest-assets.json`).then(resolve);
         });
-      }).catch(reject).finally(console.log('Building assets done.'));
+      }).catch(reject).finally(console.timeEnd('Building assets done after'));
     });
   });
 }
@@ -209,6 +215,7 @@ function watchAll() {
 }
 
 function serve() {
+  console.time('Starting local dev server done after');
   console.log('Starting local dev server...');
   return new Promise((resolve, reject) => {
     phpServer({
@@ -226,7 +233,7 @@ function serve() {
           scroll: false,
         },
       }, () => {
-        console.log('Starting local dev server done.');
+        console.timeEnd('Starting local dev server done after');
         resolve();
       });
     });
