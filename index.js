@@ -94,6 +94,7 @@ function buildCSS() {
           precision: 8,
           outputStyle: 'compressed',
           sourceMap: true,
+          sourceMapEmbed: true,
         }, (err, res) => {
           if (err) return reject(err);
           resolve(res);
@@ -106,7 +107,6 @@ function buildCSS() {
         const filename = path.basename(value.stats.entry, '.scss');
         const outputFilePath = `${paths.dest.scss}/${filename}.css`;
         promises.push(fs.outputFile(outputFilePath, value.css));
-        promises.push(fs.outputFile(`${outputFilePath}.map`, value.map));
         files.push({ path: outputFilePath, content: value.css });
       }
       Promise.all(promises).then(() => {
@@ -131,7 +131,7 @@ function buildJS() {
       .transform(babelify.configure({ presets: ['@babel/preset-env'] }))
       .transform('unassertify', { global: true })
       .transform('@goto-bus-stop/envify', { global: true })
-      .transform('uglifyify', { global: true, sourceMap: false })
+      .transform('uglifyify', { global: true, sourceMap: true })
       .plugin('common-shakeify')
       .plugin('browser-pack-flat/plugin')
       .bundle()
