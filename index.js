@@ -25,7 +25,7 @@ const dest = './dist';
 
 const paths = {
   src: {
-    scss: {
+    styles: {
       watch: './src/scss/',
       bundles: [
         {
@@ -35,7 +35,7 @@ const paths = {
       ],
     },
 
-    js: {
+    scripts: {
       watch: './src/js/',
       bundles: [
         {
@@ -55,18 +55,18 @@ const paths = {
       files: ['./src/files/'],
     },
 
-    php: {
+    views: {
       watch: './src/php/',
       files: ['./src/php/'],
     },
   },
 
   dest: {
-    scss: `${dest}/css`,
-    js: `${dest}/js`,
+    styles: `${dest}/css`,
+    scripts: `${dest}/js`,
     assets: `${dest}/assets`,
     files: dest,
-    php: dest,
+    views: dest,
   },
 };
 
@@ -96,14 +96,13 @@ function clean() {
   });
 }
 
-function buildCSS() {
-  console.time('Building CSS done after');
-  console.log('Building CSS...');
+function buildStyles() {
+  console.time('Building styles done after');
+  console.log('Building styles...');
   return new Promise((resolve, reject) => {
     const promises = [];
-    const files = [];
-    for (const bundle of paths.src.scss.bundles) {
-      const outputFilePath = `${paths.dest.scss}/${bundle.name}`;
+    for (const bundle of paths.src.styles.bundles) {
+      const outputFilePath = `${paths.dest.styles}/${bundle.name}`;
       promises.push(new Promise((resolve, reject) => {
         return sass.render({
           file: bundle.entry,
@@ -114,17 +113,18 @@ function buildCSS() {
           sourceMapEmbed: !config.prod,
         }, (err, res) => {
           if (err) return reject(err);
-          resolve({ name: bundle.name, output: res});
+          resolve({ name: bundle.name, output: res });
         });
       }));
     }
-    Promise.all(promises).then((files) => {
+    Promise.all(promises).then((values) => {
       const promises = [];
-      for (var file of files) {
-        const outputFilePath = `${paths.dest.scss}/${file.name}`;
-        promises.push(fs.outputFile(outputFilePath, file.output.css));
+      const files = [];
+      for (var value of values) {
+        const outputFilePath = `${paths.dest.styles}/${value.name}`;
+        promises.push(fs.outputFile(outputFilePath, value.output.css));
         if (config.prod) {
-          files.push({ path: outputFilePath, content: file.output.css });
+          files.push({ path: outputFilePath, content: value.output.css });
         }
       }
       Promise.all(promises).then(() => {
@@ -132,19 +132,19 @@ function buildCSS() {
           rev(files, `${dest}/manifest-css.json`);
         }
         resolve();
-      }).catch(reject).finally(console.timeEnd('Building CSS done after'));
+      }).catch(reject).finally(console.timeEnd('Building styles done after'));
     });
   });
 }
 
-function buildJS() {
-  console.time('Building JS done after');
-  console.log('Building JS...');
+function buildScripts() {
+  console.time('Building scripts done after');
+  console.log('Building scripts...');
   return new Promise((resolve, reject) => {
-    fs.mkdir(paths.dest.js, { recursive: true }).then(() => {
+    fs.mkdir(paths.dest.scripts, { recursive: true }).then(() => {
       const promises = [];
-      for (const bundle of paths.src.js.bundles) {
-        const outputFilePath = `${paths.dest.js}/${bundle.name}`;
+      for (const bundle of paths.src.scripts.bundles) {
+        const outputFilePath = `${paths.dest.scripts}/${bundle.name}`;
         promises.push(new Promise((resolve, reject) => {
           const browserifyInstance = browserify(bundle.files, { debug: true })
           .on('bundle', () => {
@@ -170,7 +170,7 @@ function buildJS() {
         }));
       }
 
-      Promise.all(promises).then(resolve).catch(reject).finally(console.timeEnd('Building JS done after'));
+      Promise.all(promises).then(resolve).catch(reject).finally(console.timeEnd('Building scripts done after'));
     });
   });
 }
@@ -187,15 +187,15 @@ function buildFiles() {
   });
 }
 
-function buildPHP(done) {
-  console.time('Building PHP done after');
-  console.log('Building PHP...');
+function buildViews(done) {
+  console.time('Building views done after');
+  console.log('Building views...');
   return new Promise((resolve, reject) => {
     const promises = [];
-    for (const path of paths.src.php.files) {
-      promises.push(fs.copy(path, paths.dest.php));
+    for (const path of paths.src.views.files) {
+      promises.push(fs.copy(path, paths.dest.views));
     }
-    Promise.all(promises).then(resolve).catch(reject).finally(console.timeEnd('Building PHP done after'));
+    Promise.all(promises).then(resolve).catch(reject).finally(console.timeEnd('Building views done after'));
   });
 }
 
@@ -240,10 +240,10 @@ function watch(path, action) {
 
 function watchAll() {
   console.log('Watching for changes...');
-  watch(paths.src.php.watch, buildPHP);
+  watch(paths.src.views.watch, buildViews);
   watch(paths.src.files.watch, buildFiles);
-  watch(paths.src.scss.watch, buildCSS);
-  watch(paths.src.js.watch, buildJS);
+  watch(paths.src.styles.watch, buildStyles);
+  watch(paths.src.scripts.watch, buildScripts);
 }
 
 function serve() {
@@ -275,9 +275,9 @@ function serve() {
 clean().then(() => {
   buildAssets().then(() => {
     const promises = [
-      buildCSS(),
-      buildJS(),
-      buildPHP(),
+      buildStyles(),
+      buildScripts(),
+      buildViews(),
       buildFiles(),
     ];
     if (config.serve) {
