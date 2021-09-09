@@ -9,10 +9,16 @@ const path = require('path');
 const phpServer = require('php-server');
 const sass = require('node-sass');
 
+const params = process.argv.slice(2);
+
 const config = {
   host: '0.0.0.0',
   port: 2000,
+  prod: params.indexOf('--prod') > -1,
+  serve: params.indexOf('--serve') > -1,
 };
+
+console.log(`Building project for ${config.prod ? 'PRODUCTION' : 'DEVELOPMENT'}`);
 
 // Paths
 const dest = './dist';
@@ -94,9 +100,9 @@ function buildCSS() {
           file: file,
           outFile: outputFilePath,
           precision: 8,
-          outputStyle: 'compressed',
-          sourceMap: true,
-          sourceMapEmbed: true,
+          outputStyle: config.prod ? 'compressed' : 'expanded',
+          sourceMap: !config.prod,
+          sourceMapEmbed: !config.prod,
         }, (err, res) => {
           if (err) return reject(err);
           resolve(res);
@@ -109,10 +115,14 @@ function buildCSS() {
         const filename = path.basename(value.stats.entry, '.scss');
         const outputFilePath = `${paths.dest.scss}/${filename}.css`;
         promises.push(fs.outputFile(outputFilePath, value.css));
-        files.push({ path: outputFilePath, content: value.css });
+        if (config.prod) {
+          files.push({ path: outputFilePath, content: value.css });
+        }
       }
       Promise.all(promises).then(() => {
-        rev(files, `${dest}/manifest-css.json`);
+        if (config.prod) {
+          rev(files, `${dest}/manifest-css.json`);
+        }
         resolve();
       }).catch(reject).finally(console.timeEnd('Building CSS done after'));
     });
@@ -125,19 +135,24 @@ function buildJS() {
   return new Promise((resolve, reject) => {
     fs.mkdir(paths.dest.js, { recursive: true }).then(() => {
       const outputFilePath = `${paths.dest.js}/main.js`;
-      const output = browserify(paths.src.js.files, { debug: true })
+      const browserifyInstance = browserify(paths.src.js.files, { debug: true })
       .on('bundle', () => {
-        fs.readFile(outputFilePath).then((content) => {
-          rev([{ path: outputFilePath, content: content }], `${dest}/manifest-js.json`);
-        });
-      })
-      .transform(babelify.configure({ presets: ['@babel/preset-env'] }))
-      .transform('unassertify', { global: true })
-      .transform('@goto-bus-stop/envify', { global: true })
-      .transform('uglifyify', { global: true, sourceMap: true })
-      .plugin('common-shakeify')
-      .plugin('browser-pack-flat/plugin')
-      .bundle()
+        if (config.prod) {
+          fs.readFile(outputFilePath).then((content) => {
+            rev([{ path: outputFilePath, content: content }], `${dest}/manifest-js.json`);
+          });
+        }
+      }).transform(babelify.configure({ presets: ['@babel/preset-env'] }));
+
+      if (config.prod) {
+        browserifyInstance.transform('unassertify', { global: true })
+        .transform('@goto-bus-stop/envify', { global: true })
+        .transform('uglifyify', { global: true, sourceMap: true })
+        .plugin('common-shakeify')
+        .plugin('browser-pack-flat/plugin');
+      }
+
+      browserifyInstance.bundle()
       .pipe(fs.createWriteStream(outputFilePath))
       .on('error', reject)
       .on('finish', () => {
@@ -184,17 +199,22 @@ function buildAssets() {
         promises.push(fs.copyFile(file, `${paths.dest.assets}/${filename}`));
       }
       Promise.all(promises).then((values) => {
-        const promises = [];
-        for (const file of paths.src.assets.files) {
-          promises.push(fs.readFile(file).then((content) => {
-            const filePath = `${paths.dest.assets}/${path.basename(file)}`;
-            return { path: filePath, content: content };
-          }));
+        if (config.prod) {
+          const promises = [];
+          for (const file of paths.src.assets.files) {
+            promises.push(fs.readFile(file).then((content) => {
+              const filePath = `${paths.dest.assets}/${path.basename(file)}`;
+              return { path: filePath, content: content };
+            }));
+          }
+          Promise.all(promises).then((files) => {
+            rev(files, `${dest}/manifest-assets.json`).then(resolve).finally(console.timeEnd('Building assets done after'));
+          });
+        } else {
+          console.timeEnd('Building assets done after');
+          resolve();
         }
-        Promise.all(promises).then((files) => {
-          rev(files, `${dest}/manifest-assets.json`).then(resolve);
-        });
-      }).catch(reject).finally(console.timeEnd('Building assets done after'));
+      }).catch(reject);
     });
   });
 }
@@ -221,7 +241,7 @@ function serve() {
     phpServer({
       port: config.port,
       hostname: config.host,
-      base: './dist',
+      base: dest,
     }).then(() => {
       browserSync.init({
         proxy: `${config.host}:${config.port}`,
@@ -248,10 +268,12 @@ clean().then(() => {
       buildPHP(),
       buildFiles(),
     ];
-    Promise.all(promises).then(() => {
-      serve().then(() => {
-        watchAll();
+    if (config.serve) {
+      Promise.all(promises).then(() => {
+        serve().then(() => {
+          watchAll();
+        });
       });
-    });
+    }
   });
 });
