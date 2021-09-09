@@ -26,27 +26,32 @@ const dest = './dist';
 const paths = {
   src: {
     scss: {
-      all: './src/scss/',
+      watch: './src/scss/',
       files: ['./src/scss/main.scss'],
     },
 
     js: {
-      all: './src/js/',
-      files: ['./node_modules/bootstrap/dist/js/bootstrap.min.js'],
+      watch: './src/js/',
+      bundles: [
+        {
+          name: 'main.js',
+          files: ['./node_modules/bootstrap/dist/js/bootstrap.min.js'],
+        },
+      ],
     },
 
     assets: {
-      all: './src/assets/',
+      watch: './src/assets/',
       files: [],
     },
 
     files: {
-      all: './src/files/',
+      watch: './src/files/',
       files: ['./src/files/'],
     },
 
     php: {
-      all: './src/php/',
+      watch: './src/php/',
       files: ['./src/php/'],
     },
   },
@@ -134,31 +139,35 @@ function buildJS() {
   console.log('Building JS...');
   return new Promise((resolve, reject) => {
     fs.mkdir(paths.dest.js, { recursive: true }).then(() => {
-      const outputFilePath = `${paths.dest.js}/main.js`;
-      const browserifyInstance = browserify(paths.src.js.files, { debug: true })
-      .on('bundle', () => {
-        if (config.prod) {
-          fs.readFile(outputFilePath).then((content) => {
-            rev([{ path: outputFilePath, content: content }], `${dest}/manifest-js.json`);
-          });
-        }
-      }).transform(babelify.configure({ presets: ['@babel/preset-env'] }));
+      const promises = [];
+      for (const bundle of paths.src.js.bundles) {
+        const outputFilePath = `${paths.dest.js}/${bundle.name}`;
+        promises.push(new Promise((resolve, reject) => {
+          const browserifyInstance = browserify(bundle.files, { debug: true })
+          .on('bundle', () => {
+            if (config.prod) {
+              fs.readFile(outputFilePath).then((content) => {
+                rev([{ path: outputFilePath, content: content }], `${dest}/manifest-js.json`);
+              });
+            }
+          }).transform(babelify.configure({ presets: ['@babel/preset-env'] }));
 
-      if (config.prod) {
-        browserifyInstance.transform('unassertify', { global: true })
-        .transform('@goto-bus-stop/envify', { global: true })
-        .transform('uglifyify', { global: true, sourceMap: true })
-        .plugin('common-shakeify')
-        .plugin('browser-pack-flat/plugin');
+          if (config.prod) {
+            browserifyInstance.transform('unassertify', { global: true })
+            .transform('@goto-bus-stop/envify', { global: true })
+            .transform('uglifyify', { global: true, sourceMap: true })
+            .plugin('common-shakeify')
+            .plugin('browser-pack-flat/plugin');
+          }
+
+          browserifyInstance.bundle()
+          .pipe(fs.createWriteStream(outputFilePath))
+          .on('error', reject)
+          .on('finish', resolve);
+        }));
       }
 
-      browserifyInstance.bundle()
-      .pipe(fs.createWriteStream(outputFilePath))
-      .on('error', reject)
-      .on('finish', () => {
-        console.timeEnd('Building JS done after');
-        resolve();
-      });
+      Promise.all(promises).then(resolve).catch(reject).finally(console.timeEnd('Building JS done after'));
     });
   });
 }
@@ -228,10 +237,10 @@ function watch(path, action) {
 
 function watchAll() {
   console.log('Watching for changes...');
-  watch(paths.src.php.all, buildPHP);
-  watch(paths.src.files.all, buildFiles);
-  watch(paths.src.scss.all, buildCSS);
-  watch(paths.src.js.all, buildJS);
+  watch(paths.src.php.watch, buildPHP);
+  watch(paths.src.files.watch, buildFiles);
+  watch(paths.src.scss.watch, buildCSS);
+  watch(paths.src.js.watch, buildJS);
 }
 
 function serve() {
