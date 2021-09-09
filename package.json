@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "gulp",
-    "start:prod": "gulp --prod",
-    "build": "gulp build",
-    "build:prod": "gulp build --prod"
+    "start": "node index --serve",
+    "start:prod": "node index --prod --serve",
+    "build": "node index",
+    "build:prod": "node index --prod"
   },
   "repository": {
     "type": "git",
