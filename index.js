@@ -27,7 +27,12 @@ const paths = {
   src: {
     scss: {
       watch: './src/scss/',
-      files: ['./src/scss/main.scss'],
+      bundles: [
+        {
+          name: 'main.css',
+          entry: './src/scss/main.scss',
+        },
+      ],
     },
 
     js: {
@@ -97,12 +102,11 @@ function buildCSS() {
   return new Promise((resolve, reject) => {
     const promises = [];
     const files = [];
-    for (const file of paths.src.scss.files) {
-      const filename = path.basename(file, '.scss');
-      const outputFilePath = `${paths.dest.scss}/${filename}.css`;
+    for (const bundle of paths.src.scss.bundles) {
+      const outputFilePath = `${paths.dest.scss}/${bundle.name}`;
       promises.push(new Promise((resolve, reject) => {
         return sass.render({
-          file: file,
+          file: bundle.entry,
           outFile: outputFilePath,
           precision: 8,
           outputStyle: config.prod ? 'compressed' : 'expanded',
@@ -110,18 +114,17 @@ function buildCSS() {
           sourceMapEmbed: !config.prod,
         }, (err, res) => {
           if (err) return reject(err);
-          resolve(res);
+          resolve({ name: bundle.name, output: res});
         });
       }));
     }
-    Promise.all(promises).then((values) => {
+    Promise.all(promises).then((files) => {
       const promises = [];
-      for (var value of values) {
-        const filename = path.basename(value.stats.entry, '.scss');
-        const outputFilePath = `${paths.dest.scss}/${filename}.css`;
-        promises.push(fs.outputFile(outputFilePath, value.css));
+      for (var file of files) {
+        const outputFilePath = `${paths.dest.scss}/${file.name}`;
+        promises.push(fs.outputFile(outputFilePath, file.output.css));
         if (config.prod) {
-          files.push({ path: outputFilePath, content: value.css });
+          files.push({ path: outputFilePath, content: file.output.css });
         }
       }
       Promise.all(promises).then(() => {
