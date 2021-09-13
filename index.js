@@ -22,18 +22,18 @@ const config = {
 
 const paths = {
   styles: {
-    watch: './src/scss/',
+    watch: './src/styles/',
     bundles: [
       {
         name: 'main.css',
-        entry: './src/scss/main.scss',
+        entry: './src/styles/main.scss',
       },
     ],
     dest: `${config.dest}/styles`,
   },
 
   scripts: {
-    watch: './src/js/',
+    watch: './src/scripts/',
     bundles: [
       {
         name: 'main.js',
@@ -50,8 +50,8 @@ const paths = {
   },
 
   files: {
-    watch: ['./src/files/', './src/php/'],
-    files: ['./src/files/', './src/php/'],
+    watch: ['./src/files/', './src/views/'],
+    files: ['./src/files/', './src/views/'],
     dest: config.dest,
   },
 };
