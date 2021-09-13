@@ -20,7 +20,7 @@ function assetPath($filename, $type) {
  * @return String path to the file including its hashcode
  */
 function cssPath($filename) {
-  return '/css/'.assetPath($filename, 'css');
+  return '/styles/'.assetPath($filename, 'styles');
 }
 
 /**
@@ -29,7 +29,7 @@ function cssPath($filename) {
  * @return String path to the file including its hashcode
  */
 function jsPath($filename) {
-  return '/js/'.assetPath($filename, 'js');
+  return '/scripts/'.assetPath($filename, 'scripts');
 }
 
 /**
