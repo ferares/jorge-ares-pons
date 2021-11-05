@@ -28,7 +28,7 @@ if ($uri === '/') {
 
     <main id="content">
       <?php require_once($url); ?>
-    <main>
+    </main>
 
     <?php require_once("./inc/_footer.php"); ?>
 
