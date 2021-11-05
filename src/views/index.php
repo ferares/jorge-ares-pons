@@ -20,10 +20,15 @@ if ($uri === '/') {
   <?php require_once("./inc/_head.php"); ?>
 
   <body>
+    <a class="visually-hidden-focusable" href="#content">
+      Ir al contenido
+    </a>
 
     <?php require_once("./inc/_header.php"); ?>
 
-    <?php require_once($url); ?>
+    <main id="content">
+      <?php require_once($url); ?>
+    <main>
 
     <?php require_once("./inc/_footer.php"); ?>
 
