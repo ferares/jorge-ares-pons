@@ -6,7 +6,7 @@
       </h1>
       <div class="list-group list-group-flush">
         <?php foreach ($documents as $document): ?>
-            <a href="<?php echo $document['link'] ?>" class="list-group-item list-group-item-action" target="_blank">
+            <a href="<?php echo $document['link'] ?>" class="list-group-item list-group-item-action" target="_blank" rel="noreferrer">
               <h2 class="mb-1 d-flex justify-content-between">
                 <?php echo $document['title'] ?>
                 <button class="btn btn-outline-primary" type="button" style="white-space:nowrap; height:min-content">
