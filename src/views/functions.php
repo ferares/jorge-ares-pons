@@ -15,6 +15,15 @@ function assetPath($filename, $type) {
 }
 
 /**
+ * Get a path to a document file with hashcode
+ * @param String $filename name of the file
+ * @return String path to the file including its hashcode
+ */
+function documentPath($filename) {
+  return '/assets/'.assetPath("documents/$filename", 'assets');
+}
+
+/**
  * Get a path to a css file with hashcode
  * @param String $filename name of the file
  * @return String path to the file including its hashcode
@@ -30,6 +39,15 @@ function cssPath($filename) {
  */
 function jsPath($filename) {
   return '/scripts/'.assetPath($filename, 'scripts');
+}
+
+/**
+ * Echo the path to a document file with hashcode
+ * @param String $filename name of the file
+ * @return String path to the file including its hashcode
+ */
+function echoDocumentPath($filename) {
+  echo documentPath($filename);
 }
 
 /**

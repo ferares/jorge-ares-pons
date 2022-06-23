@@ -1,5 +1,6 @@
 <?php
 require_once('./functions.php');
+require_once('./documents.php');
 
 // Get the URL
 $uri = $_SERVER["REQUEST_URI"];
