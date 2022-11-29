@@ -35,6 +35,6 @@
     "sass": "1.39.2",
     "slugify": "1.6.5",
     "through2": "4.0.2",
-    "tinyify": "4.0.0"
+    "tinyify": "3.0.0"
   }
 }
