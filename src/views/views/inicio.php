@@ -83,8 +83,8 @@
       </ol>
       <p>
         Contacto:
-        <a href="mailto:sitio.jorge@ares.uy">
-          sitio.jorge@ares.uy
+        <a href="mailto:fermin@ares.uy">
+          fermin@ares.uy
         </a>
       </p>
     </div>
