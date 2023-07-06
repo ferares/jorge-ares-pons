@@ -38,12 +38,12 @@ $documents = [
     ],
     [
       'title' => 'AGENCIA COMENTARIOS Nº1 APACET VERSION FINAL',
-      'description' => 'Idem',
+      'description' => 'Requisitos académicos',
       'fileName' => 'AGENCIA-COMENTARIOS-No1-APACET-VERSION-FINAL.pdf',
     ],
     [
       'title' => 'AGENCIA APACET Nº 3 Independencia y autonomia de funcionamiento',
-      'description' => 'Idem',
+      'description' => 'Requisitos académicos',
       'fileName' => 'AGENCIA-APACET-No-3-Independencia-y-autonomia-de-funcionamiento.pdf',
     ],
     [

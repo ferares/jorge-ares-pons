@@ -21,16 +21,7 @@ const config = {
 };
 
 const paths = {
-  styles: {
-    watch: './src/styles/',
-    bundles: [
-      {
-        name: 'main.css',
-        entry: './src/styles/main.scss',
-      },
-    ],
-    dest: `${config.dest}/styles`,
-  },
+  styles: { bundles: [] },
 
   scripts: {
     watch: './src/scripts/',
