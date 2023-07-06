@@ -252,6 +252,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .document-list__item__description {
+  font-size: 1.125rem;
   margin: 0;
 }
 

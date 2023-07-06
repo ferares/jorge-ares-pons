@@ -15,8 +15,6 @@
             <p class="document-list__item__description">
               <?php if ($document['description']): ?>
                 <?php echo $document['description'] ?>
-              <?php else: ?>
-                <br>
               <?php endif; ?>
             </p>
           </div>
