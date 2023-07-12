@@ -14,6 +14,10 @@ if ($uri === '/') {
 } else {
   $uri = substr($uri, 1);
 }
+if (!file_exists($url)) {
+  http_response_code(404);
+  $url = 'views/404.php';
+}
 ?>
 
 <!DOCTYPE html>
