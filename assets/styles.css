@@ -232,7 +232,6 @@ h1, h2, h3, h4, h5, h6 {
 /* Document lists */
 .document-list__list {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
   list-style: none;
   margin: 0;
@@ -250,7 +249,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .document-list__item__content {
   display: flex;
-  gap: 1rem;
+  gap: 2rem;
   margin-bottom: 2rem;
   width: 100%;
 }
@@ -262,17 +261,30 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .docuemnt-list__item__texts {
+  display: grid;
   flex: 1;
+  gap: 1rem;
 }
 
 .document-list__item__title {
   font-family: var(--font-family);
-  margin-bottom: 1rem;
+  margin: 0;
 }
 
 .document-list__item__description {
   font-size: 1.125rem;
   margin: 0;
+}
+
+.document-list__item__date {
+  align-items: center;
+  display: flex;
+  font-size: 1.125rem;
+  gap: .5rem;
+}
+
+.document-list__date__img {
+  width: 1.5rem;
 }
 
 .document-list__item__link {
