@@ -6,6 +6,11 @@
     <?php foreach ($sectionDocuments as $document): ?>
       <?php $documentName = $document['fileName'] ?>
       <li class="document-list__item">
+        <?php if ($document['new']): ?>
+          <span class="document-list__item__badge">
+            Nuevo
+          </span>
+        <?php endif; ?>
         <div class="document-list__item__content">
           <img class="document-list__item__img" src="<?= assetPath('icons/document.svg') ?>" alt="">
           <div class="docuemnt-list__item__texts">

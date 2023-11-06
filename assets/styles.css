@@ -244,7 +244,18 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: var(--border-radius);
   display: flex;
   flex-direction: column;
-  padding: 2rem;
+  padding: 2.5rem 2rem;
+  position: relative;
+}
+
+.document-list__item__badge {
+  background-color: var(--color-secondary);
+  border-bottom-left-radius: var(--border-radius);
+  color: #fff;
+  padding: .5rem 1rem;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 .document-list__item__content {
