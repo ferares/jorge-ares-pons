@@ -80,7 +80,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .visually-hidden-focusable:not(:focus):not(:focus-within):not(caption),
 .visually-hidden:not(caption) {
-  position: absolute !important;
+  position: fixed !important;
 }
 
 .visually-hidden,
@@ -93,6 +93,21 @@ h1, h2, h3, h4, h5, h6 {
   clip: rect(0,0,0,0) !important;
   white-space: nowrap !important;
   border: 0 !important;
+}
+
+.skip-main {
+  background-color: var(--color-secondary);
+  border-bottom-right-radius: 55px;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: bold;
+  left: 0;
+  padding: 10px 30px;
+  padding-left: 20px;
+  position: fixed;
+  text-decoration: none;
+  top: 0;
+  z-index: 9999;
 }
 
 /* Navbar */
@@ -216,16 +231,16 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0;
 }
 
-.home__dictadura {
+.home__destacado {
   margin: 2rem 0;
   text-align: center;
 }
 
-.home__dictadura__line {
+.home__destacado__line {
   margin: 1rem 0;
 }
 
-.home__dictadura__content {
+.home__destacado__content {
   font-size: 1.25rem;
 }
 

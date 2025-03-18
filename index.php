@@ -26,7 +26,7 @@ if (!file_exists($url)) {
   <?php require_once("./inc/_head.php"); ?>
 
   <body>
-    <a class="visually-hidden-focusable" href="#content">
+    <a class="visually-hidden-focusable skip-main" href="#content">
       Ir al contenido
     </a>
 
