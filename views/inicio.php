@@ -1,7 +1,8 @@
 <div class="home content page">
   <h1 class="title-main">
-    Breve reseña de la actividad universitaria de Jorge Ares Pons
+    Breve reseña de la actividad universitaria del Dr. Jorge Ares Pons
   </h1>
+  <img src="<?= assetPath("jorge.jpg") ?>" alt="Foto del Dr. Jorge Ares Pons" class="home__img">
   <ol class="home__list">
     <li class="home__list__item">
       Ingreso a la UDELAR  a mediados de la década del 40 (estudiante)
@@ -16,7 +17,7 @@
       Idem  Docente (1965-1969)
     </li>
     <li class="home__list__item">
-      Doctorado en Química de la UDELAR   (1970)
+      Doctorado en Química de la UDELAR  (1970)
     </li>
     <li class="home__list__item">
       Delegado Docente al Claustro General (1967-1975)
@@ -31,23 +32,23 @@
       Pro-Secretario y Secretario General de la Asociación de Química y Farmacia del Uruguay (1962-1966)
     </li>
     <li class="home__list__item">
-      Miembro del Consejo Federal de la Federación de Docentes Universitarios del Uruguay 1969-1970)
+      Miembro del Consejo Federal de la Federación de Docentes Universitarios del Uruguay (1969-1970)
     </li>
     <li class="home__list__item">
       Académico Correspondiente en el Extranjero de la Academia Nacional de Farmacia y Bioquímica Argentina<br>
       (ver mención en "Revista Farmacéutica", 151 ,Nº2, 2009)
     </li>
   </ol>
-  <div class="home__dictadura">
-    <hr class="home__dictadura__line">
-    <span class="home__dictadura__content">
+  <div class="home__destacado">
+    <hr class="home__destacado__line">
+    <span class="home__destacado__content">
       Dictadura cívico militar: Actividad encubierta con los  órdenes universitarios
     </span>
-    <hr class="home__dictadura__line">
+    <hr class="home__destacado__line">
   </div>
   <ol class="home__list">
     <li class="home__list__item">
-      Reintegro a la docencia 1985-1989
+      Reintegro a la docencia (1985-1989)
     </li>
     <li class="home__list__item">
       Integrante del CDC provisorio electo en 1984
@@ -71,10 +72,21 @@
       Redactor principal del informe previo a la aprobación del Decreto 308/995, regulatorio de las instituciones terciarias privadas : CONSEJO CONSULTIVO DE ENSEÑANZA TERCIARIA PRIVADA (CCETP)
     </li>
     <li class="home__list__item">
-      Miembro del CCETP, a propuesta dela UDELAR, durante dieciséis años de gestión. Seis últimos años –hasta 2011- como Presidente.
+      Miembro del CCETP, a propuesta dela UDELAR, durante dieciséis años de gestión. Seis últimos años -hasta 2011- como Presidente.
     </li>
     <li class="home__list__item">
-      OTRAS TAREAS (científicas, docentes y administrativas, llevadas adelante durante los más de sesenta años de dedicación a la UDELAR)Cursos especiales en Montevideo y en el Exterior, trabajos de investigación,  incluso interrumpidos durante la intervención de la UDELAR, trabajos sobre organización universitaria, docencia, formación profesional, legislación farmacéutica, etc.) Ver CURRICULUM VITAE en Subpágina "LIBROS/OTROS" de la PÁGINA PRINCIPAL.
+      OTRAS TAREAS (científicas, docentes y administrativas, llevadas adelante durante los más de sesenta años de dedicación a la UDELAR)
+      Cursos especiales en Montevideo y en el Exterior, trabajos de investigación,  incluso interrumpidos durante la intervención de la UDELAR, trabajos sobre organización universitaria, docencia, formación profesional, legislación farmacéutica, etc.)
+      <a href='<?= assetPath("documents/LibrosOtros/CURRICULUM-VITAE.pdf") ?>' target="_blank">
+        Descargar CURRICULUM VITAE
+      </a>
     </li>
   </ol>
+  <div class="home__destacado">
+    <hr class="home__destacado__line">
+    <span class="home__destacado__content">
+      El Dr. Jorge Ares Pons falleció el 2 de junio de 2022 a los 94 años
+    </span>
+    <hr class="home__destacado__line">
+  </div>
 </div>

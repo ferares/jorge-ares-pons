@@ -222,6 +222,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Home */
+.home .title-main {
+  margin-bottom: 2rem;
+}
+
+.home__img {
+  display: block;
+  height: auto;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+  max-width: 500px;
+  width: 100%;
+}
+
 .home__list {
   display: grid;
   gap: 1rem;
