@@ -9,6 +9,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="<?= assetPath('styles.css') ?>">
+  <link rel="author" href="https://ares.uy">
+  <meta name="author" content="Ares Software">
   <script src="<?= assetPath('script.js') ?>"></script>
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-1ETL6R5H92"></script>
