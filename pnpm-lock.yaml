@@ -1,0 +1,47 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    devDependencies:
+      hash-and-manifest:
+        specifier: github:ferares/hash-and-manifest
+        version: https://codeload.github.com/ferares/hash-and-manifest/tar.gz/d64573be39f83a0d129dece44d8379ae78892145
+
+packages:
+
+  hash-and-manifest@https://codeload.github.com/ferares/hash-and-manifest/tar.gz/d64573be39f83a0d129dece44d8379ae78892145:
+    resolution: {tarball: https://codeload.github.com/ferares/hash-and-manifest/tar.gz/d64573be39f83a0d129dece44d8379ae78892145}
+    version: 1.0.2
+    hasBin: true
+
+  hasha@5.2.2:
+    resolution: {integrity: sha512-Hrp5vIK/xr5SkeN2onO32H0MgNZ0f17HRNH39WfL0SYUNOTZ5Lz1TJ8Pajo/87dYGEFlLMm7mIc/k/s6Bvz9HQ==}
+    engines: {node: '>=8'}
+
+  is-stream@2.0.1:
+    resolution: {integrity: sha512-hFoiJiTl63nn+kstHGBtewWSKnQLpyb155KHheA1l39uvtO9nWIop1p3udqPcUd/xbF1VLMO4n7OI6p7RbngDg==}
+    engines: {node: '>=8'}
+
+  type-fest@0.8.1:
+    resolution: {integrity: sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA==}
+    engines: {node: '>=8'}
+
+snapshots:
+
+  hash-and-manifest@https://codeload.github.com/ferares/hash-and-manifest/tar.gz/d64573be39f83a0d129dece44d8379ae78892145:
+    dependencies:
+      hasha: 5.2.2
+
+  hasha@5.2.2:
+    dependencies:
+      is-stream: 2.0.1
+      type-fest: 0.8.1
+
+  is-stream@2.0.1: {}
+
+  type-fest@0.8.1: {}
