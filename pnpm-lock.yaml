@@ -15,7 +15,7 @@ importers:
 packages:
 
   hash-and-manifest@https://codeload.github.com/ferares/hash-and-manifest/tar.gz/d64573be39f83a0d129dece44d8379ae78892145:
-    resolution: {tarball: https://codeload.github.com/ferares/hash-and-manifest/tar.gz/d64573be39f83a0d129dece44d8379ae78892145}
+    resolution: {gitHosted: true, tarball: https://codeload.github.com/ferares/hash-and-manifest/tar.gz/d64573be39f83a0d129dece44d8379ae78892145}
     version: 1.0.2
     hasBin: true
 
