@@ -1,0 +1,143 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+import DocumentList from "../components/DocumentList.astro";
+import type { Document } from "../types/Document";
+
+const documents: Document[] = [
+  {
+    title:
+      "La regulación de la Enseñanza Terciaria en el Uruguay. Historia y situación actual",
+    description:
+      "Seminario: La Evaluación y Acreditación en Instituciones de Educación Superior. Autoevaluación y Evaluación Externa, desafíos e instrumentos",
+    date: "Abril de 2009",
+    fileName: "UNESCO-seminario.pdf",
+  },
+  {
+    title: "La Universidad de la República y la formación docente",
+    description:
+      '"Jornadas Universitarias de Formación Didáctica" 6 y 7 de diciembre de 2006',
+    date: "Diciembre de 2006",
+    fileName: "UDELAR-y-Formacion-Docente.pdf",
+  },
+  {
+    title: "Trascendencia del PEDECIBA",
+    description: "Gaceta universitaria / Año 3 / Nº1 / 1989",
+    date: "1989",
+    fileName: "Trascendencia-del-PEDECIBA.pdf",
+  },
+  {
+    title:
+      'Comentarios previos sobre la carrera: "Especialización en Psicología Sistémica y Familias", presentada por la UCU',
+    description: "",
+    date: "Noviembre de 2005",
+    fileName: "Psicologia-Sistemica.-Especializacion.pdf",
+  },
+  {
+    title:
+      "Calificación de planteles docentes para el dictado de posgrados universitarios stricto sensu",
+    description: "",
+    date: "Octubre de 2005",
+    fileName: "Posgrados-y-Savello.-Maestrias-profesionales.pdf",
+  },
+  {
+    title:
+      "Pautas para la organización de un Sistema de Enseñanza Terciaria en el Uruguay",
+    description: "",
+    date: "julio de 1998",
+    fileName:
+      "Pautas-para-la-organizacion-de-un-Sistema-de-Ensenanza-Terciaria-en-el-Uruguay.pdf",
+  },
+  {
+    title: "Ordenamiento de la Enseñanza Terciaria en el Uruguay",
+    description: "",
+    date: "Abril de 1997",
+    fileName: "Ordenamiento-de-la-Ensenanza-Terciaria-en-el-Uruguay.pdf",
+  },
+  {
+    title: "Libertad de enseñanza y restricciones legales",
+    description: "",
+    date: "Noviembre de 2001",
+    fileName: "LIbertad-y-Restricciones.pdf",
+  },
+  {
+    title:
+      "Grado y Posgrado. Reconocimento de áreas disciplinarias no afines (inc. a) del Art. 4º del D. 308/95) en base solamente a posgrados",
+    description: "",
+    date: "Julio de 1996",
+    fileName: "Grado-y-Posgrado.pdf",
+  },
+  {
+    title:
+      "Fundamentación de los contenidos del Anteproyecto de ley de educación terciaria privada",
+    description: "",
+    date: "1998",
+    fileName: "Fundamentacion-del-Anteproyecto-de-UDELAR-de-1998.pdf",
+  },
+  {
+    title: "Formación docente",
+    description: 'Dos vertientes: "formación docente" y "carrera docente"',
+    fileName: "Formacion-docente.pdf",
+  },
+  {
+    title: "El Programa para el Desarrollo de las Ciencias Básicas (PEDECIBA)",
+    description: "",
+    date: "Setiembre de 2004",
+    fileName:
+      "El-Programa-para-el-Desarrollo-de-las-Ciencias-Basicas-(PEDECIBA).pdf",
+  },
+  {
+    title: "Dos documentos oficiales del CDC de la UdelaR",
+    description:
+      "Concepto de Universidad, Concepto de Educación Superior en la tradición nacional",
+    date: "1990",
+    fileName: "Dos-documentos-oficiales-del-CDC.pdf",
+  },
+  {
+    title: "Discusión a propósito de un Sistema Nacional de Educación",
+    description: "",
+    date: "Setiembre de 2005",
+    fileName: "Discusion-a-proposito-de-un-Sistema-Nacional-de-Educacion.pdf",
+  },
+  {
+    title:
+      "Correspondencia al rector Arocena: trayectoria y la situación de la Comisión Universitaria de Enseñanza Terciaria Privada (CUETP)",
+    description: "",
+    date: "Setiembre de 2007",
+    fileName: "CUETP.pdf",
+  },
+  {
+    title: "Citas para Carrera Docente",
+    description: "",
+    date: "Noviembre de 2006",
+    fileName: "Citas-para-Carrera-Docente.pdf",
+  },
+  {
+    title: "Las autonomías universitarias",
+    description: "",
+    date: "Diciembre de 2008",
+    fileName: "AUTONOMIAS-UNIVERSITARIAS.pdf",
+  },
+  {
+    title: "Anteproyecto de Ley de Educación Terciaria Privada",
+    description: "",
+    date: "Febrero de 1998",
+    fileName: "Anteproyecto-de-Ley-de-Ensenanza-Terciaria-Privada.pdf",
+  },
+  {
+    title:
+      "Luces y Sombras. Leyes y cambios. Papel de la docencia universitaria",
+    description: "",
+    date: "Julio de 2009",
+    fileName: "AGC-Paneles-sobre-Universidad.-Luces-y-Sombras.pdf",
+  },
+];
+---
+
+<Layout>
+  <DocumentList
+    title="Universidad y PEDECIBA"
+    documentsPath="Universidad-y-PEDECIBA"
+    documents={documents}
+  />
+</Layout>

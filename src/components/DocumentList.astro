@@ -1,0 +1,51 @@
+---
+import { Image } from "astro:assets";
+
+import type {Document} from "../types/Document"
+
+import documentSvg from "../assets/icons/document.svg"
+import calendarPng from "../assets/icons/calendar.png"
+
+interface Props {
+  title: string;
+  documentsPath: string;
+  documents: Document[];
+}
+
+const { title, documentsPath, documents } = Astro.props;
+---
+
+<div class="document-list content page">
+  <h1 class="title-main">
+    {title}
+  </h1>
+  <ul class="document-list__list">
+    {documents.map(document => (
+      <li class="document-list__item">
+        {document.new && (<span class="document-list__item__badge"> Nuevo </span>)}
+        <div class="document-list__item__content">
+          <Image class="document-list__item__img" src={documentSvg} alt="" />
+          <div class="docuemnt-list__item__texts">
+            <h2 class="document-list__item__title">
+              {document.title}
+            </h2>
+            <p class="document-list__item__description">
+              {document.description}
+            </p>
+            <div class="document-list__item__date">
+              {document.date && (
+              <Image class="document-list__date__img" src={calendarPng} alt="" />
+              <span>
+                {document.date}
+              </span>
+              )}
+            </div>
+          </div>
+        </div>
+        <a class="btn document-list__item__link" href={`/documents/${documentsPath}/${document.fileName}`} target="_blank">
+          Descargar
+        </a>
+      </li>
+    ))}
+  </ul>
+</div>

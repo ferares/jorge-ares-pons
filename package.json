@@ -1,16 +1,18 @@
 {
   "name": "jorge-ares-pons",
-  "version": "1.0.0",
-  "private": true,
+  "type": "module",
+  "version": "0.0.1",
   "engines": {
     "node": "24.15.0"
   },
-  "packageManager": "pnpm@11.1.2",
+  "packageManager": "pnpm@11.1.3",
   "scripts": {
-    "start": "php -S 0.0.0.0:2000",
-    "build": "hash-and-manifest"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
   "devDependencies": {
-    "hash-and-manifest": "github:ferares/hash-and-manifest"
+    "astro": "6.3.2"
   }
 }

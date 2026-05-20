@@ -1,0 +1,82 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+import DocumentList from "../components/DocumentList.astro";
+import type { Document } from "../types/Document";
+
+const documents: Document[] = [
+  {
+    title: "Nuevo Consejo Consultivo",
+    description:
+      "Exposición del Dr. Jorge Ares Pons en el acto de asunción de las nuevas autoridades del Consejo Consultivo de Enseñanza Terciaria Privada, realizado el 27 de junio de 2005 en la sede del Ministerio de Educación y Cultura",
+    date: "Junio de 2005",
+    fileName: "Nuevo-Consejo-Consultivo.pdf",
+  },
+  {
+    title: "Correspondencia a los legisladores sobre APACET",
+    description:
+      'Comentarios sobre el proyecto de "Ley de Creación de una Agencia de Acreditación (APACET) para la Promoción y el Aseguramiento de la Calidad de la Educación Terciaria"',
+    date: "Marzo de 2010",
+    fileName: "Correo-a-legisladores-sobre-APACET.-Marzo-2010.pdf",
+  },
+  {
+    title: "Correo a legisladores sobre APACET",
+    description: "",
+    date: "Abril de 2012",
+    fileName: "Correo-a-legisladores-sobre-APACET.-Abril-2012.pdf",
+  },
+  {
+    title:
+      "Consejo Consultivo de Enseñanza Terciaria Privada (CCETP) período 2005-2008 cese",
+    description: "",
+    date: "Junio de 2008",
+    fileName: "Consejo-Consultivo-cese.-Junio-08.pdf",
+  },
+  {
+    title:
+      "Consejo Consultivo de Enseñanza Terciaria Privada (CCETP) Toma de posesión de nuevas autoridades",
+    description: "",
+    date: "Noviembre de 2008",
+    fileName: "CCETP-Toma-de-posesion-de-nuevas-autoridades.-Nov.-08.pdf",
+  },
+  {
+    title:
+      "Association of Independent Colleges and Schools (AICS) (Ciclo 1989)",
+    description: "",
+    date: "Julio de 2007",
+    fileName:
+      "Association-of-Independent-Colleges-and-Schools-(AICS)-Requisitos.pdf",
+  },
+  {
+    title:
+      "Comentarios sobre la ley de creación de una agencia de acreditación (APACET) para la promoción y el aseguramiento de la calidad de la educación terciaria",
+    description:
+      "Proyecto a elevar por el Ministerio de Educación y Cultura (MEC) al Poder Ejecutivo en agosto de 2009, elevado a la Asamblea General el 18 de setiembre de 2009",
+    date: "2009",
+    fileName: "AGENCIA-COMENTARIOS-No1-APACET-VERSION-FINAL.pdf",
+  },
+  {
+    title:
+      'Independencia y autonomia de la proyectada "Agencia de Promoción y Aseguramiento de la Calidad de la Educación Terciaria" (APACET)',
+    description: "",
+    date: "Junio de 2011",
+    fileName:
+      "AGENCIA-APACET-No-3-Independencia-y-autonomia-de-funcionamiento.pdf",
+  },
+  {
+    title:
+      'Sobre la ceración de la "Agencia de Promoción y Aseguramiento de la Calidad de la Educación Terciaria" (APACET)',
+    description: "",
+    date: "octubre de 2009",
+    fileName: "AGENCIA-2o-documento-sobre-APACET.pdf",
+  },
+];
+---
+
+<Layout>
+  <DocumentList
+    title="Evaluación y acreditación. APACET"
+    documentsPath="Evaluacion-y-acreditacion.-APACET"
+    documents={documents}
+  />
+</Layout>

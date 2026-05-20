@@ -1,0 +1,196 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+import DocumentList from "../components/DocumentList.astro";
+import type { Document } from "../types/Document";
+
+const documents: Document[] = [
+  {
+    title: "Niveles de titulación",
+    description:
+      "EXPEDICION DE TITULOS DE CARRERAS DE INSTITUCIONES UNIVERSITARIAS PRIVADAS",
+    date: "Octubre de 2008",
+    fileName: "Titulos-Privadas.pdf",
+  },
+  {
+    title:
+      "Situación patrimonial y contable de instituciones universitarias privadas sin fines de lucro",
+    description: "",
+    date: "Noviembre de 2008",
+    fileName:
+      "Situacion-patrimonial-y-contable-de-instituciones-universitarias-privadas-sin-fines-de-lucro.pdf",
+  },
+  {
+    title: "Proyecto Storace-Palomeque",
+    description: "Comisión Central de Educación",
+    date: "Marzo de 1992",
+    fileName: "Proyecto-Storace-Palomeque.pdf",
+  },
+  {
+    title: "Proyecto Fau",
+    description: "",
+    date: "Julio de 2003",
+    fileName: "Proyecto-Fau.pdf",
+  },
+  {
+    title: "Correspondencia al ministro Guzmán",
+    description: "Consejo Consultivo de Enseñanza Terciaria Privada",
+    date: "Setiembre de 2004",
+    fileName: "Posgrados-Guzman.pdf",
+  },
+  {
+    title:
+      "EL GOBIERNO DE LAS INSTITUCIONES UNIVERSITARIAS PRIVADAS SEGÚN EL DEC. 308/995. PERSONERIA JURIDICA Y PERSONERIA ACADEMICA",
+    description: "",
+    date: "Noviembre de 2007",
+    fileName: "Personeria-juridica-y-academica.pdf",
+  },
+  {
+    title: "Normativa aplicable a las instituciones privadas",
+    description: "Decretos 308/995 y 309/002",
+    date: "Noviembre de 2011",
+    fileName: "Normativa-aplicable-a-las-instituciones-privadas.pdf",
+  },
+  {
+    title: "EL MEC Y LA EDUCACION SUPERIOR PRIVADA",
+    description: "",
+    fileName: "MEC-y-privados.pdf",
+  },
+  {
+    title:
+      "Dirección de Educación del MEC y Consejo Consultivo de Enseñanza Terciaria Privada (CCETP)",
+    description: "",
+    fileName: "MEC-y-CCETP.pdf",
+  },
+  {
+    title:
+      "Transformación de un Instituto Universitario en Universidad de acuerdo a la normativa vigente",
+    description: "",
+    date: "Julio de 2008",
+    fileName: "Instituto-vs-Universidad.-Dictamen.-Julio-2008.pdf",
+  },
+  {
+    title:
+      "Algunos comentarios informales sobre la posibilidad de transformación de un Instituto Universitario en Universidad",
+    description: "",
+    date: "febrero de 2008",
+    fileName: "Instituto-vs.-Universidad.-Febrero-2008.pdf",
+  },
+  {
+    title:
+      "ESTATUTOS DE ASOCIACIONES CIVILES PARA INSTITUCIONES UNIVERSITARIAS Problema: Injerencia de los órganos administrativos en aspectos académicos",
+    description: "",
+    date: "Julio de 2005",
+    fileName: "Injerencia-administrativa-en-universidades-privadas.pdf",
+  },
+  {
+    title:
+      "Instituciones universitarias públicas y privadas. Compatibilidad del ejercicio simultáneo de la docencia, de funciones de dirección u otras similares",
+    description: "",
+    date: "Agosto de 2006",
+    fileName: "Incompatibilidades-publico-y-privado.pdf",
+  },
+  {
+    title:
+      "Fanelli y Balán: Expansión de la oferta universitaria. Nuevas instituciones, nuevos programas",
+    description: "Centro de Estudios de Estado y Sociedad (CEDES)",
+    date: "1994",
+    fileName: "Fanelli-Balan.-Universidades-Privadas.pdf",
+  },
+  {
+    title: "Concepto de Facultad",
+    description: "",
+    date: "Julio de 1992",
+    fileName: "Facultad-(significado).pdf",
+  },
+  {
+    title: "La enseñanza terciaria privada en el Uruguay. Legislación vigente.",
+    description:
+      "16 años de Consejo Consultivo de Enseñanza Terciaria Privada (CCETP)",
+    date: "Abril de 2012",
+    fileName:
+      "Ensenanza-terciaria-privada-en-el-Uruguay.-Legislacion-vigente.pdf",
+  },
+  {
+    title: "Personal docente de instituciones universitarias privadas",
+    description: "",
+    date: "Setiembre de 2007",
+    fileName: "Docentes-de-instituciones-privadas.pdf",
+  },
+  {
+    title: "Dictamen 328: Maestrías académicas y Maestrías profesionales",
+    description: "",
+    fileName: "Dictamen-No-328-(maestrias-academicas-y-profesionales).pdf",
+  },
+  {
+    title:
+      "Dictamen 244: Valoración académica del personal docente universitario",
+    description: "",
+    date: "Julio de 2007",
+    fileName: "Dictamen-No-244-(doctorados).pdf",
+  },
+  {
+    title: "Dictamen 232: Suficiencia académica del personal docente",
+    description: "",
+    date: "Noviembre de 2006",
+    fileName: "Dictamen-No-232-(personal-docente).pdf",
+  },
+  {
+    title: "Dictamen 222: Personal docente a cargo de los Doctorados",
+    description: "",
+    date: "Agosto de 2006",
+    fileName: "Dictamen-No-222-(alcances-Dec.308995).pdf",
+  },
+  {
+    title: "Dictamen 293: Instituto Universitario Maldonado - Punta del Este",
+    description: "",
+    date: "Diciembre de 2009",
+    fileName: "dictamen-293-Maldonado-Punta-del-Este.pdf",
+  },
+  {
+    title: "Comisión Previo CCETP",
+    description: "",
+    fileName: "Comision-Previo-CCETP.pdf",
+  },
+  {
+    title: "Comentarios sobre dictado de carreras no presentadas",
+    description: "",
+    date: "Diciembre de 2010",
+    fileName: "Comentarios-sobre-dictado-de-carreras-no-presentadas.pdf",
+  },
+  {
+    title:
+      "Especialización en Ciencia y Tecnología de Alimentos (Acotaciones sobre conceptos y contenidos)",
+    description: "",
+    date: "Marzo de 2008",
+    fileName: "Ciencia-y-Tecnologia-de-Alimentos.-Especializacion.pdf",
+  },
+  {
+    title: "CCETP y CUETP para Rector",
+    description: "",
+    date: "Junio de 2006",
+    fileName: "CCETP-y-CUETP-para-Rector.pdf",
+  },
+  {
+    title: "El concepto de autonomía en el decreto 308/995",
+    description: "",
+    date: "Abril de 2010",
+    fileName: "Autonomia-academica-y-dec.308-995.pdf",
+  },
+  {
+    title:
+      'Fundamento de voto sobre la "Licenciatura en Arquitectura de Interiores" presentada por la institución ORT',
+    description: "",
+    date: "Diciembre de 2004",
+    fileName: "Arquitecto-ORT.pdf",
+  },
+];
+---
+
+<Layout>
+  <DocumentList
+    title="Universidades privadas"
+    documentsPath="Universidades-privadas"
+    documents={documents}
+  />
+</Layout>

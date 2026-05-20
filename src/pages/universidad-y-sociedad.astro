@@ -1,0 +1,258 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+import DocumentList from "../components/DocumentList.astro";
+import type { Document } from "../types/Document";
+
+const documents: Document[] = [
+  {
+    title: "Hitos universitarios",
+    description: "",
+    fileName: "Hitos-universitarios.pdf",
+  },
+  {
+    title:
+      "Universidades públicas y privadas. ¿Convergencia, convivencia o conflicto?",
+    description:
+      'IV Jornadas Nacionales del 2000. Grupo de Trabajo Hacer la Historia: "UNIVERSIDAD Y SOCIEDAD" Universidad Nacional de Rosario, Facultad de Humanidades y Artes 13 y 14 octubre 2000',
+    date: "Versión corregida 2005",
+    fileName:
+      "Universidades-publicas-y-privadas.-Convergencia-convivencia-o-conflicto.pdf",
+  },
+  {
+    title: "Terciario y Universitario. Licenciados y Técnicos",
+    description: "",
+    fileName: "Terciario-y-Universitario.-Licenciados-y-Tecnicos.pdf",
+  },
+  {
+    title: "Técnica y Tecnología. Técnicos y Tecnólogos",
+    description: "",
+    date: "Mayo de 2003",
+    fileName: "Tecnica-y-Tecnologia.-Tecnicos-y-Tecnologos.pdf",
+  },
+  {
+    title: "Presente y futuro de la Universidad Latinoamericana",
+    description:
+      'Revista "Educación Superior y Sociedad", vol. 7, Nº 1: 109-126, Caracas, 1996',
+    date: "1996",
+    fileName: "Presente-y-futuro-de-la-Universidad-Latinoamericana.pdf",
+  },
+  {
+    title: "Políticas de Estado en materia de Educación",
+    description:
+      'IV ENCUENTRO "EDUCACION PARA LA INTEGRACION" SIMPOSIO: ESTADO Y UNIVERSIDAD EN LA INTEGRACION REGIONAL AUGM. UNIVERSIDAD NACIONAL DE ENTRE RIOS. 22-23-24 MAYO 1996 CONCORDIA R.A.',
+    date: "Mayo de 1996",
+    fileName: "Politicas-de-Estado-en-materia-de-Educacion.pdf",
+  },
+  {
+    title: 'Neoliberalismo y Universidad: conservadores y "renovadores"',
+    description: "Cuatro decanos",
+    date: "Octubre de 1997",
+    fileName: "Cuatro-decanos.pdf",
+  },
+  {
+    title: "Niveles de titulación",
+    description:
+      "EXPEDICION DE TITULOS DE CARRERAS DE INSTITUCIONES UNIVERSITARIAS PRIVADAS",
+    date: "Octubre de 2008",
+    fileName: "Niveles-de-titulacion.pdf",
+  },
+  {
+    title: "Reportaje a Jorge Ares Pons",
+    description: '"Neoliberalismo y universidad" en revista Siete sobre Siete',
+    date: "Mayo de 2004",
+    fileName: "Jorge-Ares-Pons-Reportaje.pdf",
+  },
+  {
+    title:
+      "Informe preliminar (Comisión Sectorial de Enseñanza): Carreras técnicas y tecnológicas",
+    description: "Comisión Sectorial de Enseñanza",
+    date: "Junio de 2005",
+    fileName:
+      "Informe-preliminar-(Comision-Sectorial-de-Ensenanza):-Carreras-tecnicas-y-tecnologicas.pdf",
+  },
+  {
+    title: "Ética y Universidad",
+    description: "Extractos",
+    fileName: "Etica-y-Universidad-(extractos).pdf",
+  },
+  {
+    title:
+      "Educación superior: internacionalización e integración regional. Papel de las nuevas tecnologías de la información y comunicación (TIC)",
+    description: "IV Cumbre Iberoamericana de Rectores",
+    date: "Mayo de 2006",
+    fileName: "Cumbre-iberoamericana-de-julio-de-2006.pdf",
+  },
+  {
+    title: "Cuatro documentos oficiales del CDC de la UDELAR",
+    description:
+      "Concepto de Universidad, Concepto de Educación Superior en la tradición nacional, Expedición de títulos, Instituciones provadas de educación superior",
+    date: "1990",
+    fileName: "Cuatro-documentos-oficiales-del-CDC-de-la-UDELAR.pdf",
+  },
+  {
+    title: "Córdoba 2000",
+    description:
+      "Conmemoración de los 80 años del Movimiento Reformista de Córdoba",
+    date: "1998",
+    fileName: "Cordoba-2000.pdf",
+  },
+  {
+    title: "Condición universitaria",
+    description:
+      "IV COLOQUIO SOBRE PENSAMIENTO Y ACTUALIDAD TEORIA DE LA UNIVERSIDAD-Fac.de Humanidades y Ciencias de la Educación, Montevideo, 6-8 de noviembre 2007",
+    date: "Octubre de 2007",
+    fileName: "Condicion-universitaria.pdf",
+  },
+  {
+    title: "Concepto de Universidad y Educación Superior. Cronología",
+    description: "",
+    date: "Junio de 1995",
+    fileName:
+      "Concepto-de-Universidad-y-Educacion-Superior.-Cronologia-CONAPRO-etc.pdf",
+  },
+  {
+    title:
+      'Comentarios a propósito de una propuesta del Rector referida a "áreas" y "unidades disciplinarias"',
+    description: "",
+    date: "Setiembre de 1999",
+    fileName:
+      'Comentarios-a-proposito-de-una-propuesta-del-Rector-referida-a-"areas"-y-"unidades-disciplinarias".pdf',
+  },
+  {
+    title: "Concepto de certificados, títulos, diplomas",
+    description: "",
+    date: "Mayo de 2003",
+    fileName: "Certificados-titulos-diplomas.pdf",
+  },
+  {
+    title:
+      "Breve análisis y comentarios sobre los niveles superiores de la CINE 1997",
+    description: "",
+    date: "Octubre de 2000",
+    fileName:
+      "Breve-analisis-y-comentarios-sobre-los-niveles-superiores-de-la-CINE-1997.pdf",
+  },
+  {
+    title: "Alma Bolón: La uniforme celebración de la diversidad",
+    description: "",
+    date: "Noviembre de 2011",
+    fileName: "BOLON-ALMA-operti-rama-DIVERSIDAD-EDUCATIVA-DIC-2011.pdf",
+  },
+  {
+    title: "La Internacionalización de la educación superior",
+    description: "Publicado en Bitácora",
+    date: "Noviembre de 2003",
+    fileName: "BITACORA.-La-Internacionalizacion-de-la-educacion-superior.pdf",
+  },
+  {
+    title: "Aportes para una discusión sobre áreas universitarias",
+    description: "",
+    date: "Setiembre de 1998",
+    fileName: "Aportes-para-una-discusion-sobre-areas-universitarias.pdf",
+  },
+  {
+    title:
+      "Algunas consideraciones sobre los alcances de la Enseñanza Terciaria",
+    description: "",
+    date: "Abril de 2001",
+    fileName:
+      "Algunas-consideraciones-sobre-los-alcances-de-la-Ensenanza-Terciaria.pdf",
+  },
+  {
+    title: "¿Qué es una Universidad?",
+    description: "Conferencia dictada en la Facultad de Odontología",
+    date: "Agosto de 1994",
+    fileName: "Que-es-una-Universidad.pdf",
+  },
+  {
+    title: "¿Existe la libertad académica?",
+    description:
+      "Reunión conjunta de la Asociación Internacional de Universidades (AIU) y la Unión de Universidades de América Latina (UDUAL), realizada en México en noviembre de 2001.",
+    date: "Octubre de 2001",
+    fileName: "Existe-la-libertad-academica.pdf",
+  },
+  {
+    title: "Discurso acto ASCEEP-FEUU junio 1988",
+    description:
+      "Versión abreviada de las palabras pronuncaidas por el delegado docente en el CDC, Dr. Jorge Ares Pons",
+    date: "22 de junio de 1988",
+    fileName: "Discurso acto ASCEEP-FEUU junio 1988.pdf",
+    new: true,
+  },
+  {
+    title: "El cangrejo de las elecciones universitarias",
+    description: "",
+    date: "",
+    fileName: "El cangrejo de las elecciones universitarias.jpg",
+    new: true,
+  },
+  {
+    title:
+      "Informe sobre padrones electorales del orden estudiantil y calidad de estudiante (a los fines electorales)",
+    description: "",
+    date: "Marzo de 1993",
+    fileName:
+      "Informe sobre padrones electorales del orden estudiantil y calidad de estudiante (a los fines electorales).pdf",
+    new: true,
+  },
+  {
+    title: "La Universidad política",
+    description: "Publicado en la Gaceta Universitaria",
+    date: "Agosto de 1988",
+    fileName: "La Universidad política.pdf",
+    new: true,
+  },
+  {
+    title: "La Universidad política - Addenda",
+    description: "",
+    date: "",
+    fileName: "La Universidad política - Addenda.pdf",
+    new: true,
+  },
+  {
+    title: "La Universidad y su inserción en la nueva democracia",
+    description: "",
+    date: "Diciembre de 1986",
+    fileName: "La Universidad y su inserción en la nueva democracia.pdf",
+    new: true,
+  },
+  {
+    title: "Proyecto de adicción al estatuto de personal docente",
+    description: "",
+    date: "Enero de 1986",
+    fileName: "Proyecto de adicción al estatuto de personal docente.pdf",
+    new: true,
+  },
+  {
+    title: "Raíces y sentido del cogobierno universitario",
+    description:
+      'Artículo publicado (en versión incompleta) en la revista "CATÁLISIS" (editada por los estudiantes de la Facultad de Química)',
+    date: "Agosto de 1982",
+    fileName: "Raíces y sentido del cogobierno universitario.pdf",
+    new: true,
+  },
+  {
+    title: "Universidad, educación superior y nivel terciario",
+    description: "Publicado en la Gaceta Universitaria",
+    date: "1988",
+    fileName: "Universidad, educación superior y nivel terciario.pdf",
+    new: true,
+  },
+  {
+    title: "Universidad Testimonio vivo de democracia",
+    description: "",
+    date: "",
+    fileName: "Universidad Testimonio vivo de democracia.pdf",
+    new: true,
+  },
+];
+---
+
+<Layout>
+  <DocumentList
+    title="Universidad y sociedad"
+    documentsPath="Universidad-y-sociedad"
+    documents={documents}
+  />
+</Layout>

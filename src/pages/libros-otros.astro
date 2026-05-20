@@ -1,0 +1,45 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+import DocumentList from "../components/DocumentList.astro";
+import type { Document } from "../types/Document";
+
+const documents: Document[] = [
+  {
+    title: 'Índice del libro "Universidad: ¿Anarquía organizada?"',
+    description: "",
+    fileName: "Universidad:-Anarquia-organizada.pdf",
+  },
+  {
+    title: "Miserias de las ciudades de los hombres y otras servidumbres",
+    description: "",
+    fileName:
+      "Miserias-de-las-ciudades-de-los-hombres-y-otras-servidumbres.pdf",
+  },
+  {
+    title: "CURRICULUM VITAE",
+    description: "",
+    fileName: "CURRICULUM-VITAE.pdf",
+  },
+  {
+    title: "CURRICULUM COMPLEMENTO 1",
+    description: "Renuncia al CDC como delegado del Orden Docente",
+    date: "Mayo de 1989",
+    fileName: "CURRICULUM-COMPLEMENTO-1.pdf",
+  },
+  {
+    title: "CURRICULUM COMPLEMENTO 2",
+    description: "Renuncia al CDC como delegado del Orden Egresados",
+    date: "Noviembre de 1991",
+    fileName: "CURRICULUM-COMPLEMENTO-2.pdf",
+  },
+];
+---
+
+<Layout>
+  <DocumentList
+    title="Libros/Otros"
+    documentsPath="LibrosOtros"
+    documents={documents}
+  />
+</Layout>
